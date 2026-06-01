@@ -8,9 +8,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.assets.compile = false
-
   config.active_storage.service = :local
-
   config.force_ssl = true
 
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -32,14 +30,15 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
-    port: 587,
+    port: 465,
     domain: "gmail.com",
     user_name: ENV["GMAIL_USERNAME"],
     password: ENV["GMAIL_APP_PASSWORD"],
     authentication: :plain,
-    enable_starttls_auto: true,
-    open_timeout: 10,
-    read_timeout: 10
+    ssl: true,
+    enable_starttls_auto: false,
+    open_timeout: 15,
+    read_timeout: 15
   }
 
   config.i18n.fallbacks = true
