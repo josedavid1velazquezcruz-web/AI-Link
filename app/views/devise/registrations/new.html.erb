@@ -1,0 +1,140 @@
+<div style="
+  width:100vw;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+  background:
+    linear-gradient(rgba(3,7,18,0.85), rgba(3,7,18,0.96)),
+    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
+    #030712;
+">
+
+  <div style="
+    width:550px;
+    padding:50px;
+    background:rgba(255,255,255,0.07);
+    border:2px solid #ff00ff;
+    border-radius:25px;
+    color:white;
+    box-shadow:0 0 40px rgba(255,0,255,0.2);
+  ">
+
+    <h1 style="
+      font-size:50px;
+      text-align:center;
+      margin-bottom:15px;
+      background:linear-gradient(90deg,#ff00ff,#00ffff);
+      -webkit-background-clip:text;
+      color:transparent;
+    ">
+      Registrarse
+    </h1>
+
+    <p style="
+      text-align:center;
+      color:#ccc;
+      margin-bottom:40px;
+    ">
+      Crea tu cuenta IA profesional.
+    </p>
+
+    <%= form_for(resource,
+    as: resource_name,
+    url: registration_path(resource_name)) do |f| %>
+
+      <div style="margin-bottom:22px;">
+
+        <label>Correo electrónico</label>
+
+        <br><br>
+
+        <%= f.email_field :email,
+        autofocus: true,
+        autocomplete: "email",
+        style: "
+          width:100%;
+          padding:16px;
+          border:none;
+          border-radius:12px;
+          font-size:16px;
+        " %>
+
+      </div>
+
+      <div style="margin-bottom:22px;">
+
+        <label>Contraseña</label>
+
+        <br><br>
+
+        <%= f.password_field :password,
+        autocomplete: "new-password",
+        style: "
+          width:100%;
+          padding:16px;
+          border:none;
+          border-radius:12px;
+          font-size:16px;
+        " %>
+
+      </div>
+
+      <div style="margin-bottom:35px;">
+
+        <label>Confirmar contraseña</label>
+
+        <br><br>
+
+        <%= f.password_field :password_confirmation,
+        autocomplete: "new-password",
+        style: "
+          width:100%;
+          padding:16px;
+          border:none;
+          border-radius:12px;
+          font-size:16px;
+        " %>
+
+      </div>
+
+      <button type="submit" style="
+        width:100%;
+        padding:18px;
+        background:#00bcd4;
+        color:white;
+        border:none;
+        border-radius:14px;
+        font-size:20px;
+        cursor:pointer;
+        box-shadow:0 0 20px rgba(0,255,255,0.5);
+      ">
+        Crear Cuenta
+      </button>
+
+    <% end %>
+
+    <br><br>
+
+    <div style="text-align:center;">
+
+      <a href="/users/sign_in" style="color:#ff00ff; text-decoration:none;">
+        Ya tengo cuenta
+        <br><br>
+
+<a href="/" style="
+  color:#00ffff;
+  text-decoration:none;
+  font-size:18px;
+">
+  ← Regresar al inicio
+</a>
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

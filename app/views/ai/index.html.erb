@@ -1,0 +1,114 @@
+<div style="
+  display:flex;
+  width:100vw;
+  min-height:100vh;
+  font-family:Arial;
+  background:
+    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
+    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
+    #050510;
+  color:white;
+">
+
+  <div style="width:270px; background:rgba(17,24,39,0.92); padding:30px; border-right:1px solid #7c3aed;">
+    <h1 style="font-size:32px; color:#00ffff;">AI-Link</h1>
+    <br><br>
+    <a href="/dashboard/index" style="color:white; text-decoration:none;"><p> inicio</p></a><br>
+    <a href="/campaigns/index" style="color:white; text-decoration:none;"><p> Campañas</p></a><br>
+    <a href="/inventory/index" style="color:white; text-decoration:none;"><p> Inventario</p></a><br>
+    <a href="/ai/index" style="color:#00ffff; text-decoration:none;"><p> IA Marketing</p></a><br>
+    <a href="/profile/index" style="color:white; text-decoration:none;"><p> Mi Perfil</p></a>
+  </div>
+
+  <div style="flex:1; padding:45px; overflow-y:auto;">
+
+    <h1 style="font-size:50px; color:#ff00ff;">IA Marketing</h1>
+    <p style="color:#ccc; font-size:18px;">Crea productos para inventario con imagen, precio, cantidad y descripción IA.</p>
+
+    <br><br>
+
+    <form action="/ai/analyze_image" method="post" enctype="multipart/form-data" style="
+      background:rgba(255,255,255,0.08);
+      padding:30px;
+      border-radius:22px;
+      border:1px solid #00ffff;
+    ">
+
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+      <h2 style="color:#00ffff;">Nuevo producto con IA</h2>
+
+      <br>
+
+      <input type="text" name="name" placeholder="Nombre del producto" style="width:100%; padding:15px; border:none; border-radius:12px; font-size:16px; margin-bottom:18px;">
+
+      <textarea name="description" placeholder="Especificaciones del producto..." style="width:100%; height:120px; padding:18px; border:none; border-radius:12px; font-size:16px; margin-bottom:18px;"></textarea>
+
+      <input type="number" step="0.01" name="price" placeholder="Precio" style="width:200px; padding:15px; border:none; border-radius:12px; font-size:16px; margin-right:10px;">
+
+      <input type="number" name="quantity" value="1" min="1" placeholder="Cantidad" style="width:200px; padding:15px; border:none; border-radius:12px; font-size:16px;">
+
+      <br><br>
+
+      <input type="file" name="image" accept="image/*" style="color:white; font-size:16px;">
+
+      <br><br>
+
+      <button type="submit" style="background:#ff00ff; color:white; padding:16px 30px; border:none; border-radius:12px; font-size:18px; cursor:pointer;">
+        Mejorar presentación con IA
+      </button>
+
+    </form>
+
+    <% if @image_result.present? %>
+
+      <br><br>
+
+      <div style="background:rgba(255,255,255,0.08); padding:30px; border-radius:22px; border:1px solid #ff00ff;">
+
+        <h2 style="color:#00ffff;">Vista previa para inventario</h2>
+
+        <br>
+
+        <table style="width:100%; border-collapse:collapse; color:white;">
+          <tr style="color:#00ffff; border-bottom:1px solid rgba(255,255,255,0.3);">
+            <th style="padding:15px; text-align:left;">Producto</th>
+            <th style="padding:15px; text-align:left;">Descripción IA</th>
+            <th style="padding:15px; text-align:left;">Precio</th>
+            <th style="padding:15px; text-align:left;">Cantidad</th>
+          </tr>
+
+          <tr>
+            <td style="padding:15px; color:#ff00ff;"><%= @generated_title %></td>
+            <td style="padding:15px;"><%= @generated_description %></td>
+            <td style="padding:15px;">$<%= @generated_price %></td>
+            <td style="padding:15px;"><%= @generated_quantity %></td>
+          </tr>
+        </table>
+
+        <br><br>
+
+        <form action="/ai/export_product" method="post">
+
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+          <input type="hidden" name="name" value="<%= @generated_title %>">
+          <input type="hidden" name="description" value="<%= @generated_description %>">
+          <input type="hidden" name="price" value="<%= @generated_price %>">
+          <input type="hidden" name="quantity" value="<%= @generated_quantity %>">
+          <input type="hidden" name="image_blob_signed_id" value="<%= @image_blob_signed_id %>">
+
+          <button type="submit" style="background:#2563eb; color:white; padding:16px 30px; border:none; border-radius:12px; font-size:18px; cursor:pointer;">
+            Exportar a Inventario
+          </button>
+
+        </form>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

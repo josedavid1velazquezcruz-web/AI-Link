@@ -1,0 +1,400 @@
+<div style="
+  display:flex;
+  width:100vw;
+  min-height:100vh;
+  font-family:Arial;
+  background:
+    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
+    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
+    #050510;
+  color:white;
+">
+
+  <!-- SIDEBAR -->
+
+  <div style="
+    width:270px;
+    background:rgba(17,24,39,0.92);
+    padding:30px;
+    border-right:1px solid #7c3aed;
+  ">
+
+    <h1 style="font-size:32px; color:#00ffff;">
+      AI-Link
+    </h1>
+
+    <br><br>
+
+    <a href="/dashboard/index" style="color:white; text-decoration:none;">
+      <p>inicio</p>
+    </a>
+
+    <br>
+
+    <a href="/campaigns/index" style="color:white; text-decoration:none;">
+      <p> Campañas</p>
+    </a>
+
+    <br>
+
+    <a href="/inventory/index" style="color:#00ffff; text-decoration:none;">
+      <p> Inventario</p>
+    </a>
+
+    <br>
+
+    <a href="/ai/index" style="color:white; text-decoration:none;">
+      <p> IA Marketing</p>
+    </a>
+
+    <br>
+
+    <a href="/profile/index" style="color:white; text-decoration:none;">
+      <p> Mi Perfil</p>
+    </a>
+
+  </div>
+
+  <!-- CONTENIDO -->
+
+  <div style="
+    flex:1;
+    padding:45px;
+    overflow-y:auto;
+  ">
+
+    <h1 style="
+      font-size:50px;
+      color:#00ffff;
+    ">
+      Inventario
+    </h1>
+
+    <p style="
+      color:#ccc;
+      font-size:18px;
+    ">
+      Administra productos, ventas y stock.
+    </p>
+
+    <br><br>
+
+    <!-- CARDS -->
+
+    <div style="
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    ">
+
+      <div style="
+        background:rgba(255,255,255,0.08);
+        padding:25px;
+        border-radius:18px;
+        border:1px solid #00ffff;
+      ">
+
+        <h2>
+          Productos
+        </h2>
+
+        <p style="
+          font-size:38px;
+        ">
+          <%= @total_products %>
+        </p>
+
+      </div>
+
+      <div style="
+        background:rgba(255,255,255,0.08);
+        padding:25px;
+        border-radius:18px;
+        border:1px solid #00ff99;
+      ">
+
+        <h2>
+          Stock total
+        </h2>
+
+        <p style="
+          font-size:38px;
+        ">
+          <%= @total_stock %>
+        </p>
+
+      </div>
+
+      <div style="
+        background:rgba(255,255,255,0.08);
+        padding:25px;
+        border-radius:18px;
+        border:1px solid #ff00ff;
+      ">
+
+        <h2>
+          Stock bajo
+        </h2>
+
+        <p style="
+          font-size:38px;
+        ">
+          <%= @low_stock %>
+        </p>
+
+      </div>
+
+    </div>
+
+    <br><br>
+
+    <!-- TABLA -->
+
+    <div style="
+      background:rgba(255,255,255,0.08);
+      padding:30px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,0.2);
+      overflow-x:auto;
+    ">
+
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        color:white;
+      ">
+
+        <thead>
+
+          <tr style="
+            border-bottom:1px solid rgba(255,255,255,0.3);
+            color:#00ffff;
+          ">
+
+            <th style="padding:15px; text-align:left;">
+              Imagen
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Producto
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Descripción
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Precio
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Cantidad
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Vendido
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Agotado
+            </th>
+
+            <th style="padding:15px; text-align:left;">
+              Eliminar
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <% @products.each do |product| %>
+
+            <tr style="
+              border-bottom:1px solid rgba(255,255,255,0.15);
+            ">
+
+              <!-- IMAGEN -->
+
+              <td style="padding:15px;">
+
+                <% if product.image.attached? %>
+
+                  <%= image_tag product.image,
+                  style: "
+                    width:80px;
+                    height:80px;
+                    object-fit:cover;
+                    border-radius:12px;
+                    border:2px solid #00ffff;
+                  " %>
+
+                <% else %>
+
+                  <div style="
+                    width:80px;
+                    height:80px;
+                    background:#111827;
+                    border-radius:12px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:12px;
+                  ">
+                    Sin imagen
+                  </div>
+
+                <% end %>
+
+              </td>
+
+              <!-- PRODUCTO -->
+
+              <td style="
+                padding:15px;
+                color:#ff00ff;
+                font-weight:bold;
+              ">
+                <%= product.name %>
+              </td>
+
+              <!-- DESCRIPCION -->
+
+              <td style="
+                padding:15px;
+                max-width:300px;
+                color:#ddd;
+              ">
+                <%= product.description %>
+              </td>
+
+              <!-- PRECIO -->
+
+              <td style="padding:15px;">
+                $<%= product.price || 0 %>
+              </td>
+
+              <!-- CANTIDAD -->
+
+              <td style="padding:15px;">
+
+                <% if product.quantity.to_i <= 0 %>
+
+                  <span style="color:#ff4444;">
+                    Agotado
+                  </span>
+
+                <% else %>
+
+                  <%= product.quantity %>
+
+                <% end %>
+
+              </td>
+
+              <!-- VENDIDO -->
+
+              <td style="padding:15px;">
+
+                <form action="/inventory/sold" method="post" style="
+                  display:flex;
+                  gap:8px;
+                ">
+
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                  <input type="hidden" name="product_id" value="<%= product.id %>">
+
+                  <input
+                    type="number"
+                    name="sold_quantity"
+                    min="1"
+                    value="1"
+                    style="
+                      width:70px;
+                      padding:8px;
+                      border:none;
+                      border-radius:8px;
+                    "
+                  >
+
+                  <button type="submit" style="
+                    background:#2563eb;
+                    color:white;
+                    border:none;
+                    padding:9px 12px;
+                    border-radius:8px;
+                    cursor:pointer;
+                  ">
+                    Vendido
+                  </button>
+
+                </form>
+
+              </td>
+
+              <!-- AGOTADO -->
+
+              <td style="padding:15px;">
+
+                <form action="/inventory/sold_out" method="post">
+
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                  <input type="hidden" name="product_id" value="<%= product.id %>">
+
+                  <button type="submit" style="
+                    background:#dc2626;
+                    color:white;
+                    border:none;
+                    padding:10px 15px;
+                    border-radius:8px;
+                    cursor:pointer;
+                  ">
+                    Agotado
+                  </button>
+
+                </form>
+
+              </td>
+
+              <!-- ELIMINAR -->
+
+              <td style="padding:15px;">
+
+                <form action="/inventory/delete" method="post">
+
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                  <input type="hidden" name="product_id" value="<%= product.id %>">
+
+                  <button type="submit" style="
+                    background:#7f1d1d;
+                    color:white;
+                    border:none;
+                    padding:10px 15px;
+                    border-radius:8px;
+                    cursor:pointer;
+                  ">
+                    Eliminar
+                  </button>
+
+                </form>
+
+              </td>
+
+            </tr>
+
+          <% end %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,117 @@
+<div style="
+  display:flex;
+  width:100vw;
+  min-height:100vh;
+  font-family:Arial;
+  background:
+    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
+    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
+    #050510;
+  color:white;
+">
+
+  <div style="width:270px; background:rgba(17,24,39,0.92); padding:30px; border-right:1px solid #7c3aed;">
+    <h1 style="font-size:32px; color:#00ffff;">AI-Link</h1>
+
+    <br><br>
+
+    <a href="/dashboard/index" style="color:white; text-decoration:none;"><p> inicio</p></a><br>
+    <a href="/campaigns/index" style="color:#00ffff; text-decoration:none;"><p> Campañas</p></a><br>
+    <a href="/inventory/index" style="color:white; text-decoration:none;"><p> Inventario</p></a><br>
+    <a href="/ai/index" style="color:white; text-decoration:none;"><p> IA Marketing</p></a><br>
+    <a href="/profile/index" style="color:white; text-decoration:none;"><p> Mi Perfil</p></a>
+  </div>
+
+  <div style="flex:1; padding:50px; overflow-y:auto;">
+
+    <h1 style="font-size:50px; color:#ff00ff;">Campañas</h1>
+
+    <p style="color:#ccc; font-size:18px; margin-top:10px;">
+      Administra tus campañas privadas de marketing digital.
+    </p>
+
+    <br><br>
+
+    <form action="/campaigns/create" method="post" style="
+      background:rgba(255,255,255,0.08);
+      padding:30px;
+      border-radius:22px;
+      border:1px solid #00ffff;
+      box-shadow:0 0 25px rgba(0,255,255,0.15);
+    ">
+
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+      <input
+        type="text"
+        name="name"
+        placeholder="Nombre de campaña"
+        style="padding:16px; width:330px; border:none; border-radius:12px; font-size:16px;"
+      >
+
+      <input
+        type="text"
+        name="status"
+        placeholder="Estado: Activa / Pausada"
+        style="padding:16px; width:240px; border:none; border-radius:12px; font-size:16px; margin-left:10px;"
+      >
+
+      <button type="submit" style="
+        padding:16px 28px;
+        background:#2563eb;
+        color:white;
+        border:none;
+        border-radius:12px;
+        font-size:16px;
+        cursor:pointer;
+        margin-left:10px;
+      ">
+        Crear Campaña
+      </button>
+
+    </form>
+
+    <br><br>
+
+    <% @campaigns.each do |campaign| %>
+
+      <div style="
+        background:rgba(255,255,255,0.09);
+        padding:28px;
+        border-radius:22px;
+        margin-bottom:22px;
+        border:1px solid rgba(255,255,255,0.18);
+        box-shadow:0 0 25px rgba(255,0,255,0.12);
+      ">
+
+        <h2 style="font-size:28px; color:#00ffff;">
+          <%= campaign.name %>
+        </h2>
+
+        <p style="color:#ccc; margin-top:10px;">
+          Estado: <%= campaign.status %>
+        </p>
+
+        <br>
+
+        <a href="/campaigns/delete/<%= campaign.id %>">
+          <button style="
+            padding:12px 22px;
+            background:#dc2626;
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+          ">
+            Eliminar
+          </button>
+        </a>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

@@ -1,0 +1,106 @@
+<div style="
+  display:flex;
+  width:100vw;
+  min-height:100vh;
+  font-family:Arial;
+  background:
+    linear-gradient(rgba(10,10,30,0.88), rgba(10,10,30,0.95)),
+    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
+    #050510;
+  color:white;
+">
+
+  <div style="width:270px; background:rgba(17,24,39,0.92); padding:30px; border-right:1px solid #7c3aed;">
+    <h1 style="font-size:32px; color:#00ffff;">AI-Link</h1>
+
+    <br><br>
+
+    <a href="/dashboard/index" style="color:white; text-decoration:none;"><p> inicio</p></a><br>
+    <a href="/campaigns/index" style="color:white; text-decoration:none;"><p> Campañas</p></a><br>
+    <a href="/inventory/index" style="color:white; text-decoration:none;"><p> Inventario</p></a><br>
+    <a href="/ai/index" style="color:white; text-decoration:none;"><p> IA Marketing</p></a>
+    <br>
+
+<a href="/profile/index" style="color:white; text-decoration:none;">
+  <p> Mi Perfil</p>
+</a>
+  </div>
+
+  <div style="flex:1; padding:40px; overflow-y:auto;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+
+      <div>
+        <h1 style="font-size:50px; color:#ff00ff;">inicio</h1>
+        <p style="color:#b5faff; font-size:18px;">Bienvenido a AI-Link Marketing Suite</p>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:15px; background:rgba(255,255,255,0.1); padding:15px 20px; border-radius:18px; border:1px solid #00ffff;">
+
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, style: "width:55px; height:55px; border-radius:50%; object-fit:cover;" %>
+        <% else %>
+          <div style="width:55px; height:55px; border-radius:50%; background:#7c3aed; display:flex; align-items:center; justify-content:center; font-size:24px;">
+            
+          </div>
+        <% end %>
+
+        <div>
+          <p style="font-size:14px; color:#aaa;">Usuario conectado</p>
+         <p style="font-size:18px; font-weight:bold;">
+  <%= current_user.username.presence || "Usuario" %>
+</p>
+
+<p style="font-size:14px; color:#ccc;">
+  <%= current_user.email %>
+</p>
+        </div>
+
+        <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, style: "background:#dc2626; color:white; border:none; padding:12px 18px; border-radius:10px; cursor:pointer;" %>
+
+      </div>
+
+    </div>
+
+    <br><br>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+
+      <div style="background:linear-gradient(135deg,#2563eb,#00ffff); padding:30px; border-radius:20px;">
+        <h2>Campañas</h2>
+        <p style="font-size:45px;"><%= @total_campaigns %></p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#059669,#00ff99); padding:30px; border-radius:20px;">
+        <h2>Activas</h2>
+        <p style="font-size:45px;"><%= @active_campaigns %></p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#7c3aed,#ff00ff); padding:30px; border-radius:20px;">
+        <h2>IA Marketing</h2>
+        <p style="font-size:45px;">Online</p>
+      </div>
+
+    </div>
+
+    <br><br>
+
+    <div style="background:rgba(255,255,255,0.1); padding:30px; border-radius:20px; border:1px solid #00ffff;">
+
+      <h2 style="font-size:30px; color:#00ffff;">Campañas Recientes</h2>
+
+      <br>
+
+      <% @campaigns.each do |campaign| %>
+        <div style="border-bottom:1px solid rgba(255,255,255,0.2); padding:15px 0;">
+          <h3 style="font-size:22px;"><%= campaign.name %></h3>
+          <p style="color:#bbb;">Estado: <%= campaign.status %></p>
+        </div>
+      <% end %>
+
+    </div>
+
+  </div>
+
+</div>
