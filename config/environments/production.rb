@@ -29,14 +29,13 @@ Rails.application.configure do
   }
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 465,
-    domain: "gmail.com",
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_APP_PASSWORD"],
+    address: "smtp-relay.brevo.com",
+    port: 587,
+    domain: "ai-link-production.up.railway.app",
+    user_name: ENV["BREVO_SMTP_LOGIN"],
+    password: ENV["BREVO_SMTP_KEY"],
     authentication: :plain,
-    ssl: true,
-    enable_starttls_auto: false,
+    enable_starttls_auto: true,
     open_timeout: 15,
     read_timeout: 15
   }
