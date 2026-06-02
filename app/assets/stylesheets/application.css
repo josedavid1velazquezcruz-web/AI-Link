@@ -13,3 +13,214 @@
  *= require_tree .
  *= require_self
  */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: #111827;
+  color: white;
+  padding: 24px;
+  position: fixed;
+  height: 100vh;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sidebar a,
+.logout-btn {
+  color: white;
+  text-decoration: none;
+  background: #1f2937;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.sidebar a:hover,
+.logout-btn:hover {
+  background: #2563eb;
+}
+
+.dashboard-content {
+  margin-left: 260px;
+  padding: 32px;
+  width: 100%;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  margin-bottom: 28px;
+}
+
+.welcome-card h1 {
+  margin-top: 0;
+  font-size: 32px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.step-card {
+  background: white;
+  padding: 24px;
+  border-radius: 22px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+}
+
+.step-card span {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.assistant-card {
+  margin-top: 30px;
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.mascot {
+  font-size: 70px;
+  background: #eef2ff;
+  padding: 22px;
+  border-radius: 50%;
+}
+
+.assistant-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 12px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.primary-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    padding: 18px;
+    padding-bottom: 90px;
+  }
+
+  .welcome-card {
+    padding: 24px;
+  }
+
+  .welcome-card h1 {
+    font-size: 25px;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assistant-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .assistant-actions {
+    justify-content: center;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    justify-content: space-around;
+    padding: 10px 4px;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
+    z-index: 1000;
+  }
+
+  .mobile-bottom-nav a {
+    text-decoration: none;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .mobile-bottom-nav span {
+    font-size: 24px;
+  }
+
+  .mobile-bottom-nav small {
+    font-size: 11px;
+  }
+}
