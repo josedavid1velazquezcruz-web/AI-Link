@@ -1,142 +1,72 @@
-<div style="
-  width:100vw;
-  min-height:100vh;
-  font-family:Arial;
-  color:white;
-  background:
-    linear-gradient(rgba(3,7,18,0.80), rgba(3,7,18,0.95)),
-    radial-gradient(circle at top left, #ff00ff 0%, transparent 28%),
-    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
-    #030712;
-  overflow:hidden;
-">
+<div class="home-page">
 
-  <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:35px 60px;
-  ">
-
-    <div>
-      <h1 style="font-size:34px; color:#00ffff; letter-spacing:4px;">
-        AI-LINK
-      </h1>
-
-      <p style="color:#ff00ff; letter-spacing:5px;">
-        MARKETING DIGITAL
-      </p>
+  <header class="topbar">
+    <div class="logo">
+      <h1>AI-Link</h1>
+      <p>Marketing Digital Inteligente</p>
     </div>
 
-    <div style="display:flex; gap:30px; font-size:18px;">
-      <a href="/" style="color:white; text-decoration:none;">Inicio</a>
-      <a href="/users/sign_in" style="color:white; text-decoration:none;">Iniciar sesión</a>
-      <a href="/users/sign_up" style="color:white; text-decoration:none;">Registrarse</a>
+    <nav>
+      <%= link_to "Inicio", root_path %>
+      <%= link_to "Iniciar Sesión", new_user_session_path %>
+      <%= link_to "Registrarse", new_user_registration_path %>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Impulsa tu negocio con inteligencia artificial</h2>
+
+    <p>
+      Gestiona campañas, inventario y contenido publicitario desde una sola plataforma.
+    </p>
+
+    <div class="hero-buttons">
+      <%= link_to "Comenzar", new_user_registration_path, class: "primary-btn" %>
+      <%= link_to "Iniciar Sesión", new_user_session_path, class: "secondary-btn" %>
     </div>
+  </section>
 
-  </div>
+  <section class="guide-section">
+    <h2>¿Cómo funciona?</h2>
 
-  <div style="
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:75vh;
-  ">
+    <div class="guide-grid">
 
-    <div style="
-      width:850px;
-      padding:60px;
-      text-align:center;
-      background:rgba(255,255,255,0.06);
-      border:2px solid #00ffff;
-      border-radius:30px;
-      box-shadow:0 0 40px rgba(0,255,255,0.25), 0 0 60px rgba(255,0,255,0.20);
-    ">
-
-      <h1 style="
-        font-size:80px;
-        background:linear-gradient(90deg,#ff00ff,#00ffff);
-        -webkit-background-clip:text;
-        color:transparent;
-        margin-bottom:20px;
-      ">
-        AI-LINK
-      </h1>
-
-      <h2 style="
-        font-size:34px;
-        letter-spacing:12px;
-        margin-bottom:35px;
-      ">
-        MARKETING DIGITAL
-      </h2>
-
-      <p style="
-        font-size:24px;
-        color:#ddd;
-        line-height:1.5;
-        margin-bottom:40px;
-      ">
-        Plataforma inteligente de marketing digital impulsada por inteligencia artificial.
-      </p>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:15px;
-        margin-bottom:45px;
-      ">
-
-        <div style="border:1px solid #00ffff; padding:15px; border-radius:15px;">
-          <br>IA
-        </div>
-
-        <div style="border:1px solid #ff00ff; padding:15px; border-radius:15px;">
-          <br>Campañas
-        </div>
-
-        <div style="border:1px solid #00ffff; padding:15px; border-radius:15px;">
-          <br>Métricas
-        </div>
-
-        <div style="border:1px solid #ff00ff; padding:15px; border-radius:15px;">
-          <br>Seguro
-        </div>
-
+      <div class="guide-card">
+        <h3>Paso 1</h3>
+        <p>Regístrate y crea tu cuenta.</p>
       </div>
 
-      <div style="display:flex; justify-content:center; gap:25px;">
+      <div class="guide-card">
+        <h3>Paso 2</h3>
+        <p>Agrega productos o servicios a tu inventario.</p>
+      </div>
 
-        <button onclick="window.location.href='/users/sign_in'" style="
-          padding:18px 45px;
-          background:#ff00ff;
-          color:white;
-          border:none;
-          border-radius:15px;
-          font-size:22px;
-          cursor:pointer;
-          box-shadow:0 0 20px rgba(255,0,255,0.6);
-        ">
-          Iniciar Sesión
-        </button>
+      <div class="guide-card">
+        <h3>Paso 3</h3>
+        <p>Crea campañas de marketing para promocionar tu negocio.</p>
+      </div>
 
-        <button onclick="window.location.href='/users/sign_up'" style="
-          padding:18px 45px;
-          background:#00bcd4;
-          color:white;
-          border:none;
-          border-radius:15px;
-          font-size:22px;
-          cursor:pointer;
-          box-shadow:0 0 20px rgba(0,255,255,0.6);
-        ">
-          Registrarse
-        </button>
-
+      <div class="guide-card">
+        <h3>Paso 4</h3>
+        <p>Utiliza la inteligencia artificial para generar ideas y contenido.</p>
       </div>
 
     </div>
+  </section>
 
-  </div>
+  <section class="assistant-section">
+    <div class="assistant-card">
+      <h2>Asistente AI-Link</h2>
+
+      <p>
+        Bienvenido. Estoy aquí para ayudarte a comenzar.
+      </p>
+
+      <div class="assistant-options">
+        <%= link_to "Crear una cuenta", new_user_registration_path, class: "assistant-btn" %>
+        <%= link_to "Iniciar sesión", new_user_session_path, class: "assistant-btn" %>
+      </div>
+    </div>
+  </section>
 
 </div>

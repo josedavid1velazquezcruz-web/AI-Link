@@ -1,85 +1,72 @@
-<div class="app-layout">
-  <aside class="sidebar">
-    <h2>AI-Link</h2>
+<div class="home-page">
+
+  <header class="topbar">
+    <div class="logo">
+      <h1>AI-Link</h1>
+      <p>Marketing Digital Inteligente</p>
+    </div>
 
     <nav>
-      <%= link_to " Inicio", dashboard_index_path %>
-      <%= link_to " Campañas", campaigns_path %>
-      <%= link_to " Inventario", inventory_index_path %>
-      <%= link_to " IA", ai_index_path %>
-      <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "logout-btn" %>
+      <%= link_to "Inicio", root_path %>
+      <%= link_to "Iniciar Sesión", new_user_session_path %>
+      <%= link_to "Registrarse", new_user_registration_path %>
     </nav>
-  </aside>
+  </header>
 
-  <main class="dashboard-content">
-    <section class="welcome-card">
-      <h1>Bienvenido a AI-Link Marketing Suite</h1>
+  <section class="hero">
+    <h2>Impulsa tu negocio con inteligencia artificial</h2>
+
+    <p>
+      Gestiona campañas, inventario y contenido publicitario desde una sola plataforma.
+    </p>
+
+    <div class="hero-buttons">
+      <%= link_to "Comenzar", new_user_registration_path, class: "primary-btn" %>
+      <%= link_to "Iniciar Sesión", new_user_session_path, class: "secondary-btn" %>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <h2>¿Cómo funciona?</h2>
+
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <h3>Paso 1</h3>
+        <p>Regístrate y crea tu cuenta.</p>
+      </div>
+
+      <div class="guide-card">
+        <h3>Paso 2</h3>
+        <p>Agrega productos o servicios a tu inventario.</p>
+      </div>
+
+      <div class="guide-card">
+        <h3>Paso 3</h3>
+        <p>Crea campañas de marketing para promocionar tu negocio.</p>
+      </div>
+
+      <div class="guide-card">
+        <h3>Paso 4</h3>
+        <p>Utiliza la inteligencia artificial para generar ideas y contenido.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="assistant-section">
+    <div class="assistant-card">
+      <h2>Asistente AI-Link</h2>
+
       <p>
-        Esta plataforma te ayuda a organizar productos, crear campañas de marketing
-        y generar ideas con inteligencia artificial.
+        Bienvenido. Estoy aquí para ayudarte a comenzar.
       </p>
-    </section>
 
-    <section class="steps-grid">
-      <div class="step-card">
-        <span>1</span>
-        <h3>Registra tus productos</h3>
-        <p>Agrega productos o servicios para tenerlos listos en tu inventario.</p>
+      <div class="assistant-options">
+        <%= link_to "Crear una cuenta", new_user_registration_path, class: "assistant-btn" %>
+        <%= link_to "Iniciar sesión", new_user_session_path, class: "assistant-btn" %>
       </div>
+    </div>
+  </section>
 
-      <div class="step-card">
-        <span>2</span>
-        <h3>Crea campañas</h3>
-        <p>Diseña campañas para promocionar tus productos en redes sociales.</p>
-      </div>
-
-      <div class="step-card">
-        <span>3</span>
-        <h3>Usa la IA</h3>
-        <p>Genera ideas, textos publicitarios y propuestas de contenido.</p>
-      </div>
-
-      <div class="step-card">
-        <span>4</span>
-        <h3>Revisa resultados</h3>
-        <p>Consulta tu panel para ver tus campañas y administrar tu negocio.</p>
-      </div>
-    </section>
-
-    <section class="assistant-card">
-      <div class="mascot"></div>
-      <div>
-        <h2>Hola, soy tu asistente AI-Link</h2>
-        <p>¿Con qué quieres empezar?</p>
-
-        <div class="assistant-actions">
-          <%= link_to "Crear campaña", campaigns_path, class: "primary-btn" %>
-          <%= link_to "Ver inventario", inventory_index_path, class: "secondary-btn" %>
-          <%= link_to "Usar IA", ai_index_path, class: "secondary-btn" %>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="mobile-bottom-nav">
-    <%= link_to dashboard_index_path do %>
-      <span></span>
-      <small>Inicio</small>
-    <% end %>
-
-    <%= link_to campaigns_path do %>
-      <span></span>
-      <small>Campañas</small>
-    <% end %>
-
-    <%= link_to inventory_index_path do %>
-      <span></span>
-      <small>Inventario</small>
-    <% end %>
-
-    <%= link_to ai_index_path do %>
-      <span></span>
-      <small>IA</small>
-    <% end %>
-  </nav>
 </div>
