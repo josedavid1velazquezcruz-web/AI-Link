@@ -1,72 +1,33 @@
-<div class="home-page">
-
-  <header class="topbar">
-    <div class="logo">
+<div class="cyber-home">
+  <header class="cyber-header">
+    <div class="cyber-title">
+      <p>Marketing digital inteligente</p>
       <h1>AI-Link</h1>
-      <p>Marketing Digital Inteligente</p>
     </div>
 
-    <nav>
-      <%= link_to "Inicio", root_path %>
-      <%= link_to "Iniciar Sesión", new_user_session_path %>
-      <%= link_to "Registrarse", new_user_registration_path %>
-    </nav>
+    <div class="cyber-mascot">
+      <div class="mascot-face">
+        <div class="mascot-eye"></div>
+        <div class="mascot-eye"></div>
+      </div>
+
+      <div class="mascot-message">
+        Hola, soy tu asistente. Estoy listo para ayudarte a comenzar.
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <h2>Impulsa tu negocio con inteligencia artificial</h2>
-
-    <p>
-      Gestiona campañas, inventario y contenido publicitario desde una sola plataforma.
-    </p>
-
-    <div class="hero-buttons">
-      <%= link_to "Comenzar", new_user_registration_path, class: "primary-btn" %>
-      <%= link_to "Iniciar Sesión", new_user_session_path, class: "secondary-btn" %>
-    </div>
-  </section>
-
-  <section class="guide-section">
-    <h2>¿Cómo funciona?</h2>
-
-    <div class="guide-grid">
-
-      <div class="guide-card">
-        <h3>Paso 1</h3>
-        <p>Regístrate y crea tu cuenta.</p>
-      </div>
-
-      <div class="guide-card">
-        <h3>Paso 2</h3>
-        <p>Agrega productos o servicios a tu inventario.</p>
-      </div>
-
-      <div class="guide-card">
-        <h3>Paso 3</h3>
-        <p>Crea campañas de marketing para promocionar tu negocio.</p>
-      </div>
-
-      <div class="guide-card">
-        <h3>Paso 4</h3>
-        <p>Utiliza la inteligencia artificial para generar ideas y contenido.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="assistant-section">
-    <div class="assistant-card">
-      <h2>Asistente AI-Link</h2>
-
+  <main class="cyber-center">
+    <section class="cyber-card">
+      <h2>Administra tu marketing en un solo lugar</h2>
       <p>
-        Bienvenido. Estoy aquí para ayudarte a comenzar.
+        Crea campañas, organiza tu inventario y genera ideas de contenido con inteligencia artificial.
       </p>
 
-      <div class="assistant-options">
-        <%= link_to "Crear una cuenta", new_user_registration_path, class: "assistant-btn" %>
-        <%= link_to "Iniciar sesión", new_user_session_path, class: "assistant-btn" %>
+      <div class="cyber-actions">
+        <%= link_to "Iniciar sesión", new_user_session_path, class: "cyber-btn primary" %>
+        <%= link_to "Registrarse", new_user_registration_path, class: "cyber-btn secondary" %>
       </div>
-    </div>
-  </section>
-
+    </section>
+  </main>
 </div>

@@ -1,483 +1,209 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
  *= require_tree .
  *= require_self
  */
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
+  min-height: 100%;
   font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #1f2937;
 }
 
-.app-layout {
-  display: flex;
+body {
+  background: #050816;
+}
+
+.cyber-home {
   min-height: 100vh;
-}
-
-.sidebar {
-  width: 260px;
-  background: #111827;
+  padding: 32px;
   color: white;
-  padding: 24px;
-  position: fixed;
-  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.35), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.35), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(37, 99, 235, 0.28), transparent 35%),
+    linear-gradient(135deg, #050816, #0b1020 45%, #111827);
 }
 
-.sidebar h2 {
-  margin-bottom: 30px;
-}
-
-.sidebar nav {
+.cyber-header {
+  position: relative;
+  z-index: 2;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.cyber-title {
+  max-width: 700px;
+}
+
+.cyber-title p {
+  margin: 0 0 10px;
+  color: #93c5fd;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.cyber-title h1 {
+  margin: 0;
+  font-size: clamp(58px, 10vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -4px;
+  text-shadow: 0 0 35px rgba(59, 130, 246, 0.6);
+}
+
+.cyber-mascot {
+  display: flex;
+  align-items: flex-start;
   gap: 14px;
+  max-width: 380px;
 }
 
-.sidebar a,
-.logout-btn {
-  color: white;
-  text-decoration: none;
-  background: #1f2937;
-  border: none;
-  padding: 12px;
-  border-radius: 12px;
-  text-align: left;
-  cursor: pointer;
-  font-size: 15px;
+.mascot-face {
+  width: 76px;
+  height: 76px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
-.sidebar a:hover,
-.logout-btn:hover {
-  background: #2563eb;
+.mascot-eye {
+  width: 10px;
+  height: 18px;
+  border-radius: 20px;
+  background: #f8fafc;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
 }
 
-.dashboard-content {
-  margin-left: 260px;
-  padding: 32px;
+.mascot-message {
+  background: rgba(15, 23, 42, 0.76);
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  color: #e0f2fe;
+  padding: 14px 16px;
+  border-radius: 18px;
+  line-height: 1.4;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.cyber-center {
+  position: relative;
+  z-index: 2;
+  min-height: calc(100vh - 170px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.cyber-card {
   width: 100%;
+  max-width: 720px;
+  padding: 34px;
+  border-radius: 30px;
+  background: rgba(15, 23, 42, 0.62);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
 }
 
-.welcome-card {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: white;
-  padding: 32px;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-  margin-bottom: 28px;
+.cyber-card h2 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 5vw, 54px);
 }
 
-.welcome-card h1 {
-  margin-top: 0;
-  font-size: 32px;
-}
-
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.step-card {
-  background: white;
-  padding: 24px;
-  border-radius: 22px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  transition: transform 0.2s;
-}
-
-.step-card:hover {
-  transform: translateY(-5px);
-}
-
-.step-card span {
-  display: inline-flex;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #2563eb;
-  color: white;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.assistant-card {
-  margin-top: 30px;
-  background: white;
-  border-radius: 24px;
-  padding: 28px;
-  display: flex;
-  gap: 22px;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-.mascot {
-  font-size: 70px;
-  background: #eef2ff;
-  padding: 22px;
-  border-radius: 50%;
-}
-
-.assistant-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.primary-btn,
-.secondary-btn {
-  padding: 12px 18px;
-  border-radius: 14px;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.primary-btn {
-  background: #2563eb;
-  color: white;
-}
-
-.secondary-btn {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.mobile-bottom-nav {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-
-  .dashboard-content {
-    margin-left: 0;
-    padding: 18px;
-    padding-bottom: 90px;
-  }
-
-  .welcome-card {
-    padding: 24px;
-  }
-
-  .welcome-card h1 {
-    font-size: 25px;
-  }
-
-  .steps-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .assistant-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .assistant-actions {
-    justify-content: center;
-  }
-
-  .mobile-bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    justify-content: space-around;
-    padding: 10px 4px;
-    box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
-    z-index: 1000;
-  }
-
-  .mobile-bottom-nav a {
-    text-decoration: none;
-    color: #111827;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 13px;
-  }
-
-  .mobile-bottom-nav span {
-    font-size: 24px;
-  }
-
-  .mobile-bottom-nav small {
-    font-size: 11px;
-  }
-}
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  background: linear-gradient(135deg, #111827, #2563eb);
-  padding: 40px;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-}
-
-.auth-info {
-  color: white;
-  max-width: 480px;
-}
-
-.auth-info h1 {
-  font-size: 44px;
-  margin-bottom: 16px;
-}
-
-.auth-info p {
-  font-size: 18px;
+.cyber-card p {
+  margin: 0 auto 30px;
+  max-width: 580px;
+  color: #dbeafe;
+  font-size: clamp(16px, 2.5vw, 21px);
   line-height: 1.6;
 }
 
-.auth-steps {
-  margin-top: 28px;
-  display: grid;
-  gap: 14px;
-}
-
-.auth-steps div {
-  background: rgba(255,255,255,0.15);
-  padding: 16px;
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-}
-
-.auth-card {
-  background: white;
-  width: 100%;
-  max-width: 420px;
-  padding: 34px;
-  border-radius: 26px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-}
-
-.auth-card h2 {
-  margin-top: 0;
-  margin-bottom: 22px;
-  font-size: 28px;
-}
-
-.field {
-  margin-bottom: 18px;
-}
-
-.field label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.field input {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  font-size: 15px;
-}
-
-.remember-field {
+.cyber-actions {
   display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 18px;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
-.auth-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  background: #2563eb;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.auth-links {
-  margin-top: 18px;
-  text-align: center;
-}
-
-.auth-links a {
-  color: #2563eb;
+.cyber-btn {
+  min-width: 180px;
+  padding: 16px 24px;
+  border-radius: 18px;
   text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cyber-btn:hover {
+  transform: translateY(-3px);
+}
+
+.cyber-btn.primary {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+  box-shadow: 0 0 28px rgba(37, 99, 235, 0.45);
+}
+
+.cyber-btn.secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border: 1px solid rgba(147, 197, 253, 0.35);
 }
 
 @media (max-width: 768px) {
-  .auth-page {
-    flex-direction: column;
-    padding: 24px;
+  .cyber-home {
+    padding: 22px;
+    overflow-y: auto;
   }
 
-  .auth-info {
+  .cyber-header {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
-  .auth-info h1 {
-    font-size: 32px;
+  .cyber-title h1 {
+    font-size: 64px;
+    letter-spacing: -2px;
   }
 
-  .auth-card {
-    padding: 26px;
-  }
-}
-.home-page {
-  min-height: 100vh;
-  background: #0b1020;
-  color: white;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 40px;
-}
-
-.topbar nav {
-  display: flex;
-  gap: 20px;
-}
-
-.topbar a {
-  color: white;
-  text-decoration: none;
-}
-
-.logo h1 {
-  margin: 0;
-  font-size: 42px;
-}
-
-.logo p {
-  margin: 0;
-  opacity: .8;
-}
-
-.hero {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.hero h2 {
-  font-size: 52px;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  font-size: 20px;
-  max-width: 700px;
-  margin: auto;
-}
-
-.hero-buttons {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.primary-btn,
-.secondary-btn,
-.assistant-btn {
-  padding: 14px 24px;
-  border-radius: 12px;
-  text-decoration: none;
-}
-
-.primary-btn {
-  background: #2563eb;
-  color: white;
-}
-
-.secondary-btn {
-  background: white;
-  color: black;
-}
-
-.guide-section {
-  padding: 60px 30px;
-}
-
-.guide-section h2 {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.guide-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.guide-card {
-  background: white;
-  color: black;
-  padding: 25px;
-  border-radius: 18px;
-}
-
-.assistant-section {
-  padding: 40px;
-}
-
-.assistant-card {
-  background: #111827;
-  border-radius: 24px;
-  padding: 30px;
-  text-align: center;
-}
-
-.assistant-options {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.assistant-btn {
-  background: #2563eb;
-  color: white;
-}
-
-@media (max-width: 768px) {
-
-  .topbar {
+  .cyber-mascot {
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    max-width: 100%;
   }
 
-  .hero h2 {
-    font-size: 34px;
+  .mascot-message {
+    font-size: 14px;
   }
 
-  .guide-grid {
-    grid-template-columns: 1fr;
+  .cyber-center {
+    min-height: auto;
+    padding-top: 44px;
   }
 
-  .hero-buttons,
-  .assistant-options {
+  .cyber-actions {
     flex-direction: column;
+    width: 100%;
+  }
+
+  .cyber-btn {
+    width: 100%;
   }
 }
