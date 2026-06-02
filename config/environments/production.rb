@@ -16,12 +16,12 @@ Rails.application.configure do
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   config.log_tags = [:request_id]
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+ config.log_level = :debug
 
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
+config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = {
     host: "ai-link-production.up.railway.app",
