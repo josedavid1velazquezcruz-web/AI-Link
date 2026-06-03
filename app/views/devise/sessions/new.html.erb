@@ -20,8 +20,7 @@
       </div>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "ai-auth-form" }) do |f| %>
-      <div class="ai-auth-field">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "ai-auth-form", data: { turbo: false } }) do |f| %><div class="ai-auth-field">
         <%= f.label :email, "Correo electrónico" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
       </div>

@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_user!, unless: :devise_controller?
+
 
   def after_confirmation_path_for(resource_name, resource)
     root_path

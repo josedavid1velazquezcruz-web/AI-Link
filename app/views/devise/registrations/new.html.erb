@@ -20,8 +20,7 @@
       </div>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "ai-auth-form" }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "ai-auth-form", data: { turbo: false } }) do |f| %><%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="ai-auth-field">
         <%= f.label :email, "Correo electrónico" %>
