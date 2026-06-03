@@ -1,114 +1,138 @@
-<div style="
-  display:flex;
-  width:100vw;
-  min-height:100vh;
-  font-family:Arial;
-  background:
-    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
-    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
-    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
-    #050510;
-  color:white;
-">
+<div class="ai-page">
+  <header class="ai-header">
+    <div>
+      <p>AI-Link Inteligencia Artificial</p>
+      <h1>Asistente Haru</h1>
+      <span>Analiza imágenes, genera ideas y prepara contenido para tus campañas.</span>
+    </div>
 
-  <div style="width:270px; background:rgba(17,24,39,0.92); padding:30px; border-right:1px solid #7c3aed;">
-    <h1 style="font-size:32px; color:#00ffff;">AI-Link</h1>
-    <br><br>
-    <a href="/dashboard/index" style="color:white; text-decoration:none;"><p> inicio</p></a><br>
-    <a href="/campaigns/index" style="color:white; text-decoration:none;"><p> Campañas</p></a><br>
-    <a href="/inventory/index" style="color:white; text-decoration:none;"><p> Inventario</p></a><br>
-    <a href="/ai/index" style="color:#00ffff; text-decoration:none;"><p> IA Marketing</p></a><br>
-    <a href="/profile/index" style="color:white; text-decoration:none;"><p> Mi Perfil</p></a>
-  </div>
+    <%= link_to "Volver al panel", dashboard_index_path, class: "ai-back-btn" %>
+  </header>
 
-  <div style="flex:1; padding:45px; overflow-y:auto;">
-
-    <h1 style="font-size:50px; color:#ff00ff;">IA Marketing</h1>
-    <p style="color:#ccc; font-size:18px;">Crea productos para inventario con imagen, precio, cantidad y descripción IA.</p>
-
-    <br><br>
-
-    <form action="/ai/analyze_image" method="post" enctype="multipart/form-data" style="
-      background:rgba(255,255,255,0.08);
-      padding:30px;
-      border-radius:22px;
-      border:1px solid #00ffff;
-    ">
-
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-      <h2 style="color:#00ffff;">Nuevo producto con IA</h2>
-
-      <br>
-
-      <input type="text" name="name" placeholder="Nombre del producto" style="width:100%; padding:15px; border:none; border-radius:12px; font-size:16px; margin-bottom:18px;">
-
-      <textarea name="description" placeholder="Especificaciones del producto..." style="width:100%; height:120px; padding:18px; border:none; border-radius:12px; font-size:16px; margin-bottom:18px;"></textarea>
-
-      <input type="number" step="0.01" name="price" placeholder="Precio" style="width:200px; padding:15px; border:none; border-radius:12px; font-size:16px; margin-right:10px;">
-
-      <input type="number" name="quantity" value="1" min="1" placeholder="Cantidad" style="width:200px; padding:15px; border:none; border-radius:12px; font-size:16px;">
-
-      <br><br>
-
-      <input type="file" name="image" accept="image/*" style="color:white; font-size:16px;">
-
-      <br><br>
-
-      <button type="submit" style="background:#ff00ff; color:white; padding:16px 30px; border:none; border-radius:12px; font-size:18px; cursor:pointer;">
-        Mejorar presentación con IA
+  <section class="ai-hero">
+    <div class="ai-haru-area">
+      <button class="ai-haru-button" id="haru-open-panel" type="button">
+        <div class="ai-haru-face">
+          <div class="ai-haru-eye"></div>
+          <div class="ai-haru-eye"></div>
+        </div>
       </button>
 
-    </form>
+      <div class="ai-haru-message">
+        <h2>Haru</h2>
+        <p id="haru-ai-message">
+          Hola, soy Haru. Tócame para iniciar un análisis con imagen.
+        </p>
+      </div>
+    </div>
 
-    <% if @image_result.present? %>
+    <div class="ai-info-card">
+      <h3>¿Qué puedes hacer aquí?</h3>
+      <p>
+        Este apartado está preparado para analizar fotos de productos, generar ideas
+        de contenido y ayudarte a crear campañas usando diferentes modelos de IA.
+      </p>
+    </div>
+  </section>
 
-      <br><br>
+  <section class="ai-actions-panel" id="haru-actions-panel">
+    <div class="ai-actions-card">
+      <div class="ai-actions-header">
+        <div>
+          <p>Opciones de Haru</p>
+          <h2>Elige cómo quieres empezar</h2>
+        </div>
 
-      <div style="background:rgba(255,255,255,0.08); padding:30px; border-radius:22px; border:1px solid #ff00ff;">
-
-        <h2 style="color:#00ffff;">Vista previa para inventario</h2>
-
-        <br>
-
-        <table style="width:100%; border-collapse:collapse; color:white;">
-          <tr style="color:#00ffff; border-bottom:1px solid rgba(255,255,255,0.3);">
-            <th style="padding:15px; text-align:left;">Producto</th>
-            <th style="padding:15px; text-align:left;">Descripción IA</th>
-            <th style="padding:15px; text-align:left;">Precio</th>
-            <th style="padding:15px; text-align:left;">Cantidad</th>
-          </tr>
-
-          <tr>
-            <td style="padding:15px; color:#ff00ff;"><%= @generated_title %></td>
-            <td style="padding:15px;"><%= @generated_description %></td>
-            <td style="padding:15px;">$<%= @generated_price %></td>
-            <td style="padding:15px;"><%= @generated_quantity %></td>
-          </tr>
-        </table>
-
-        <br><br>
-
-        <form action="/ai/export_product" method="post">
-
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-          <input type="hidden" name="name" value="<%= @generated_title %>">
-          <input type="hidden" name="description" value="<%= @generated_description %>">
-          <input type="hidden" name="price" value="<%= @generated_price %>">
-          <input type="hidden" name="quantity" value="<%= @generated_quantity %>">
-          <input type="hidden" name="image_blob_signed_id" value="<%= @image_blob_signed_id %>">
-
-          <button type="submit" style="background:#2563eb; color:white; padding:16px 30px; border:none; border-radius:12px; font-size:18px; cursor:pointer;">
-            Exportar a Inventario
-          </button>
-
-        </form>
-
+        <button type="button" id="haru-close-panel" class="ai-close-btn">Cerrar</button>
       </div>
 
-    <% end %>
+      <div class="ai-upload-grid">
+        <label class="ai-upload-option">
+          <span>Tomar foto</span>
+          <small>Usa la cámara del dispositivo para capturar una imagen.</small>
+          <input type="file" accept="image/*" capture="environment" class="ai-hidden-input">
+        </label>
 
-  </div>
+        <label class="ai-upload-option">
+          <span>Subir foto</span>
+          <small>Selecciona una imagen guardada en tu celular o computadora.</small>
+          <input type="file" accept="image/*" class="ai-hidden-input" id="ai-image-input">
+        </label>
+      </div>
 
+      <div class="ai-preview-box" id="ai-preview-box">
+        <p>Cuando selecciones una imagen, aparecerá aquí la vista previa.</p>
+        <img id="ai-preview-image" alt="Vista previa de imagen">
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-future-grid">
+    <div>
+      <h3>Análisis de imagen</h3>
+      <p>Haru podrá reconocer productos, colores, estilo visual y oportunidades de mejora.</p>
+    </div>
+
+    <div>
+      <h3>Generación de anuncios</h3>
+      <p>Después del análisis, se podrán crear textos para redes, campañas y promociones.</p>
+    </div>
+
+    <div>
+      <h3>Sistema de varias IAs</h3>
+      <p>Más adelante podremos cambiar automáticamente entre modelos si un token se acaba.</p>
+    </div>
+  </section>
+
+  <nav class="ai-bottom-nav">
+    <%= link_to "Inicio", dashboard_index_path %>
+    <%= link_to "Campañas", campaigns_index_path %>
+    <%= link_to "Inventario", inventory_index_path %>
+    <%= link_to "IA", ai_index_path %>
+  </nav>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const openButton = document.getElementById("haru-open-panel");
+  const closeButton = document.getElementById("haru-close-panel");
+  const panel = document.getElementById("haru-actions-panel");
+  const message = document.getElementById("haru-ai-message");
+  const imageInputs = document.querySelectorAll(".ai-hidden-input");
+  const previewImage = document.getElementById("ai-preview-image");
+  const previewBox = document.getElementById("ai-preview-box");
+
+  if (openButton && panel) {
+    openButton.addEventListener("click", function () {
+      panel.classList.add("active");
+      if (message) {
+        message.textContent = "Elige si quieres tomar una foto o subir una imagen.";
+      }
+    });
+  }
+
+  if (closeButton && panel) {
+    closeButton.addEventListener("click", function () {
+      panel.classList.remove("active");
+      if (message) {
+        message.textContent = "Tócame cuando quieras iniciar otro análisis.";
+      }
+    });
+  }
+
+  imageInputs.forEach(function (input) {
+    input.addEventListener("change", function () {
+      const file = input.files[0];
+      if (!file) return;
+
+      const imageUrl = URL.createObjectURL(file);
+      previewImage.src = imageUrl;
+      previewBox.classList.add("has-image");
+
+      if (message) {
+        message.textContent = "Imagen cargada. Después conectaremos aquí el análisis con IA.";
+      }
+    });
+  });
+});
+</script>
