@@ -1,43 +1,48 @@
-<div class="auth-page">
-  <div class="auth-info">
-    <h1>Bienvenido a AI-Link</h1>
-    <p>
-      Administra campañas, inventario y genera ideas de marketing con ayuda de inteligencia artificial.
-    </p>
+<div class="auth-cyber-page">
+  <div class="auth-orb auth-orb-one"></div>
+  <div class="auth-orb auth-orb-two"></div>
 
-    <div class="auth-steps">
-      <div>Registra tus productos</div>
-      <div>Crea campañas</div>
-      <div>Genera ideas con IA</div>
+  <section class="auth-cyber-panel">
+    <div class="auth-brand">
+      <p>AI-Link Marketing Digital</p>
+      <h1>Iniciar sesión</h1>
+      <span>Accede a tu panel para administrar campañas, inventario y contenido inteligente.</span>
     </div>
-  </div>
 
-  <div class="auth-card">
-    <h2>Iniciar sesión</h2>
+    <div class="auth-mascot-box">
+      <div class="auth-mascot">
+        <div class="auth-mascot-eye"></div>
+        <div class="auth-mascot-eye"></div>
+      </div>
+      <div class="auth-mascot-message">
+        Hola. Ingresa tus datos para continuar.
+      </div>
+    </div>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <div class="auth-field">
         <%= f.label :email, "Correo electrónico" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
       </div>
 
-      <div class="field">
+      <div class="auth-field">
         <%= f.label :password, "Contraseña" %>
-        <%= f.password_field :password, autocomplete: "current-password" %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "Ingresa tu contraseña" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="remember-field">
+        <div class="auth-check">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, "Recordarme" %>
         </div>
       <% end %>
 
-      <%= f.submit "Entrar", class: "auth-btn" %>
+      <%= f.submit "Entrar", class: "auth-submit" %>
     <% end %>
 
-    <div class="auth-links">
-      <%= render "devise/shared/links" %>
+    <div class="auth-extra-links">
+      <%= link_to "Crear cuenta", new_user_registration_path %>
+      <%= link_to "Volver al inicio", root_path %>
     </div>
-  </div>
+  </section>
 </div>

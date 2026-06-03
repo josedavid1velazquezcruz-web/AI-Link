@@ -1,38 +1,48 @@
-<div style="width:100vw; min-height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial; background:#030712; color:white;">
+<div class="auth-cyber-page">
+  <div class="auth-orb auth-orb-one"></div>
+  <div class="auth-orb auth-orb-two"></div>
 
-  <div style="width:550px; padding:45px; background:rgba(255,255,255,0.08); border:2px solid #00ffff; border-radius:25px;">
-
-    <h1 style="font-size:45px; color:#00ffff; text-align:center;">Crear Cuenta</h1>
-
-    <p style="text-align:center; color:#ccc; margin-bottom:30px;">
-      Regístrate y confirma tu correo electrónico.
-    </p>
-
-    <%= render "devise/shared/error_messages", resource: resource %>
-
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post, data: { turbo: false } }) do |f| %>
-
-      <label>Correo electrónico</label><br><br>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, style: "width:100%; padding:15px; border:none; border-radius:10px; margin-bottom:20px;" %>
-
-      <label>Contraseña</label><br><br>
-      <%= f.password_field :password, autocomplete: "new-password", required: true, style: "width:100%; padding:15px; border:none; border-radius:10px; margin-bottom:20px;" %>
-
-      <label>Confirmar contraseña</label><br><br>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, style: "width:100%; padding:15px; border:none; border-radius:10px; margin-bottom:30px;" %>
-
-      <%= f.submit "Crear Cuenta", style: "width:100%; padding:16px; background:#00bcd4; color:white; border:none; border-radius:12px; font-size:20px; cursor:pointer;" %>
-
-    <% end %>
-
-    <br>
-
-    <div style="text-align:center;">
-      <a href="/users/sign_in" style="color:#ff00ff;">Ya tengo cuenta</a>
-      <br><br>
-      <a href="/" style="color:#00ffff;">← Regresar al inicio</a>
+  <section class="auth-cyber-panel">
+    <div class="auth-brand">
+      <p>AI-Link Marketing Digital</p>
+      <h1>Crear cuenta</h1>
+      <span>Regístrate para comenzar a crear campañas y administrar tu contenido.</span>
     </div>
 
-  </div>
+    <div class="auth-mascot-box">
+      <div class="auth-mascot">
+        <div class="auth-mascot-eye"></div>
+        <div class="auth-mascot-eye"></div>
+      </div>
+      <div class="auth-mascot-message">
+        Bienvenido. Crea tu cuenta para empezar.
+      </div>
+    </div>
 
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="auth-field">
+        <%= f.label :email, "Correo electrónico" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password, "Contraseña" %>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "Mínimo 6 caracteres" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password_confirmation, "Confirmar contraseña" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repite tu contraseña" %>
+      </div>
+
+      <%= f.submit "Crear cuenta", class: "auth-submit" %>
+    <% end %>
+
+    <div class="auth-extra-links">
+      <%= link_to "Ya tengo cuenta", new_user_session_path %>
+      <%= link_to "Volver al inicio", root_path %>
+    </div>
+  </section>
 </div>
