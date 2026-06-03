@@ -9,40 +9,81 @@
       <span>Regístrate para comenzar a crear campañas y administrar tu contenido.</span>
     </div>
 
-    <div class="auth-mascot-box">
-      <div class="auth-mascot">
-        <div class="auth-mascot-eye"></div>
-        <div class="auth-mascot-eye"></div>
-      </div>
-      <div class="auth-mascot-message">
-        Bienvenido. Crea tu cuenta para empezar.
-      </div>
-    </div>
+```
+<div class="auth-mascot-box">
+  <div class="auth-mascot">
+    <div class="auth-mascot-eye"></div>
+    <div class="auth-mascot-eye"></div>
+  </div>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="auth-mascot-message" id="assistant-message">
+    Bienvenido a AI-Link. Crea tu cuenta para comenzar.
+  </div>
+</div>
 
-      <div class="auth-field">
-        <%= f.label :email, "Correo electrónico" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
-      </div>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
 
-      <div class="auth-field">
-        <%= f.label :password, "Contraseña" %>
-        <%= f.password_field :password, autocomplete: "new-password", placeholder: "Mínimo 6 caracteres" %>
-      </div>
+  <div class="auth-field">
+    <%= f.label :email, "Correo electrónico" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
+  </div>
 
-      <div class="auth-field">
-        <%= f.label :password_confirmation, "Confirmar contraseña" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repite tu contraseña" %>
-      </div>
+  <div class="auth-field">
+    <%= f.label :password, "Contraseña" %>
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Mínimo 6 caracteres" %>
+  </div>
 
-      <%= f.submit "Crear cuenta", class: "auth-submit" %>
-    <% end %>
+  <div class="auth-field">
+    <%= f.label :password_confirmation, "Confirmar contraseña" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repite tu contraseña" %>
+  </div>
 
-    <div class="auth-extra-links">
-      <%= link_to "Ya tengo cuenta", new_user_session_path %>
-      <%= link_to "Volver al inicio", root_path %>
-    </div>
+  <%= f.submit "Crear cuenta", class: "auth-submit" %>
+<% end %>
+
+<div class="auth-extra-links">
+  <%= link_to "Ya tengo cuenta", new_user_session_path %>
+  <%= link_to "Volver al inicio", root_path %>
+</div>
+```
+
   </section>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+
+  const assistantMessage = document.getElementById("assistant-message");
+
+  if (!assistantMessage) return;
+
+  const messages = [
+    "Bienvenido a AI-Link. Crea tu cuenta para comenzar.",
+    "Podrás administrar campañas de marketing desde un solo lugar.",
+    "Organiza productos y servicios dentro de tu inventario.",
+    "Genera contenido utilizando inteligencia artificial.",
+    "Analiza tus estrategias desde tu panel principal.",
+    "Estoy listo para ayudarte durante tu experiencia en la plataforma."
+  ];
+
+  let currentMessage = 0;
+
+  setInterval(() => {
+    currentMessage++;
+
+    if (currentMessage >= messages.length) {
+      currentMessage = 0;
+    }
+
+    assistantMessage.style.opacity = "0";
+
+    setTimeout(() => {
+      assistantMessage.textContent = messages[currentMessage];
+      assistantMessage.style.opacity = "1";
+    }, 300);
+
+  }, 3000);
+
+});
+</script>

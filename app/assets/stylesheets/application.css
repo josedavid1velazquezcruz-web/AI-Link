@@ -437,3 +437,6 @@ body {
     align-items: center;
   }
 }
+.auth-mascot-message {
+  transition: opacity 0.3s ease;
+}

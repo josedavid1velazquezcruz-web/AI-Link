@@ -1,48 +1,71 @@
-<div class="auth-cyber-page">
-  <div class="auth-orb auth-orb-one"></div>
-  <div class="auth-orb auth-orb-two"></div>
+<script>
+document.addEventListener("turbo:load", function () {
 
-  <section class="auth-cyber-panel">
-    <div class="auth-brand">
-      <p>AI-Link Marketing Digital</p>
-      <h1>Iniciar sesión</h1>
-      <span>Accede a tu panel para administrar campañas, inventario y contenido inteligente.</span>
-    </div>
+  const assistantMessage = document.getElementById("assistant-message");
 
-    <div class="auth-mascot-box">
-      <div class="auth-mascot">
-        <div class="auth-mascot-eye"></div>
-        <div class="auth-mascot-eye"></div>
-      </div>
-      <div class="auth-mascot-message">
-        Hola. Ingresa tus datos para continuar.
-      </div>
-    </div>
+  if (!assistantMessage) return;
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
-      <div class="auth-field">
-        <%= f.label :email, "Correo electrónico" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
-      </div>
+  const messages = [
+    "Bienvenido a AI-Link. Inicia sesión para continuar.",
+    "AI-Link te ayuda a gestionar campañas de marketing digital desde un solo lugar.",
+    "Puedes organizar productos, servicios e inventario fácilmente.",
+    "Utiliza inteligencia artificial para generar contenido y nuevas ideas.",
+    "Analiza el rendimiento de tus estrategias desde tu panel principal.",
+    "Estoy aquí para ayudarte durante tu experiencia en la plataforma."
+  ];
 
-      <div class="auth-field">
-        <%= f.label :password, "Contraseña" %>
-        <%= f.password_field :password, autocomplete: "current-password", placeholder: "Ingresa tu contraseña" %>
-      </div>
+  let currentMessage = 0;
 
-      <% if devise_mapping.rememberable? %>
-        <div class="auth-check">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, "Recordarme" %>
-        </div>
-      <% end %>
+  setInterval(() => {
+    currentMessage++;
 
-      <%= f.submit "Entrar", class: "auth-submit" %>
-    <% end %>
+    if (currentMessage >= messages.length) {
+      currentMessage = 0;
+    }
 
-    <div class="auth-extra-links">
-      <%= link_to "Crear cuenta", new_user_registration_path %>
-      <%= link_to "Volver al inicio", root_path %>
-    </div>
-  </section>
-</div>
+    assistantMessage.style.opacity = "0";
+
+    setTimeout(() => {
+      assistantMessage.textContent = messages[currentMessage];
+      assistantMessage.style.opacity = "1";
+    }, 300);
+
+  }, 3000);
+
+});
+</script><script>
+document.addEventListener("turbo:load", function () {
+
+  const assistantMessage = document.getElementById("assistant-message");
+
+  if (!assistantMessage) return;
+
+  const messages = [
+    "Bienvenido a AI-Link. Inicia sesión para continuar.",
+    "AI-Link te ayuda a gestionar campañas de marketing digital desde un solo lugar.",
+    "Puedes organizar productos, servicios e inventario fácilmente.",
+    "Utiliza inteligencia artificial para generar contenido y nuevas ideas.",
+    "Analiza el rendimiento de tus estrategias desde tu panel principal.",
+    "Estoy aquí para ayudarte durante tu experiencia en la plataforma."
+  ];
+
+  let currentMessage = 0;
+
+  setInterval(() => {
+    currentMessage++;
+
+    if (currentMessage >= messages.length) {
+      currentMessage = 0;
+    }
+
+    assistantMessage.style.opacity = "0";
+
+    setTimeout(() => {
+      assistantMessage.textContent = messages[currentMessage];
+      assistantMessage.style.opacity = "1";
+    }, 300);
+
+  }, 3000);
+
+});
+</script>
