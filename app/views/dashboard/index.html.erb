@@ -1,72 +1,112 @@
-<div class="home-page">
-
-  <header class="topbar">
-    <div class="logo">
+<div class="dashboard-page">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-logo">
       <h1>AI-Link</h1>
-      <p>Marketing Digital Inteligente</p>
+      <p>Panel principal</p>
     </div>
 
-    <nav>
-      <%= link_to "Inicio", root_path %>
-      <%= link_to "Iniciar Sesión", new_user_session_path %>
-      <%= link_to "Registrarse", new_user_registration_path %>
+    <nav class="dashboard-menu">
+      <%= link_to "Inicio", dashboard_index_path %>
+      <%= link_to "Campañas", campaigns_path %>
+      <%= link_to "Inventario", inventory_index_path %>
+      <%= link_to "Inteligencia Artificial", ai_index_path %>
     </nav>
-  </header>
 
-  <section class="hero">
-    <h2>Impulsa tu negocio con inteligencia artificial</h2>
+    <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "dashboard-logout" %>
+  </aside>
 
-    <p>
-      Gestiona campañas, inventario y contenido publicitario desde una sola plataforma.
-    </p>
-
-    <div class="hero-buttons">
-      <%= link_to "Comenzar", new_user_registration_path, class: "primary-btn" %>
-      <%= link_to "Iniciar Sesión", new_user_session_path, class: "secondary-btn" %>
-    </div>
-  </section>
-
-  <section class="guide-section">
-    <h2>¿Cómo funciona?</h2>
-
-    <div class="guide-grid">
-
-      <div class="guide-card">
-        <h3>Paso 1</h3>
-        <p>Regístrate y crea tu cuenta.</p>
+  <main class="dashboard-main">
+    <section class="dashboard-header">
+      <div>
+        <p>Bienvenido</p>
+        <h2>Panel de control</h2>
       </div>
 
-      <div class="guide-card">
-        <h3>Paso 2</h3>
-        <p>Agrega productos o servicios a tu inventario.</p>
+      <div class="dashboard-assistant">
+        <div class="dashboard-assistant-face">
+          <div class="dashboard-assistant-eye"></div>
+          <div class="dashboard-assistant-eye"></div>
+        </div>
+
+        <div class="dashboard-assistant-text" id="dashboard-assistant-message">
+          Hola. Estoy listo para ayudarte a comenzar.
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="dashboard-card">
+        <h3>Campañas</h3>
+        <p>Crea y administra tus campañas de marketing digital.</p>
+        <%= link_to "Ver campañas", campaigns_path %>
       </div>
 
-      <div class="guide-card">
-        <h3>Paso 3</h3>
-        <p>Crea campañas de marketing para promocionar tu negocio.</p>
+      <div class="dashboard-card">
+        <h3>Inventario</h3>
+        <p>Organiza productos y servicios disponibles para tus campañas.</p>
+        <%= link_to "Ver inventario", inventory_index_path %>
       </div>
 
-      <div class="guide-card">
-        <h3>Paso 4</h3>
-        <p>Utiliza la inteligencia artificial para generar ideas y contenido.</p>
+      <div class="dashboard-card">
+        <h3>Inteligencia Artificial</h3>
+        <p>Genera ideas, textos publicitarios y contenido para tu negocio.</p>
+        <%= link_to "Usar asistente", ai_index_path %>
       </div>
+    </section>
 
-    </div>
-  </section>
+    <section class="dashboard-steps">
+      <h3>Primeros pasos</h3>
 
-  <section class="assistant-section">
-    <div class="assistant-card">
-      <h2>Asistente AI-Link</h2>
+      <div class="dashboard-steps-grid">
+        <div>
+          <strong>Paso 1</strong>
+          <p>Agrega tus productos o servicios.</p>
+        </div>
 
-      <p>
-        Bienvenido. Estoy aquí para ayudarte a comenzar.
-      </p>
+        <div>
+          <strong>Paso 2</strong>
+          <p>Crea una campaña de marketing.</p>
+        </div>
 
-      <div class="assistant-options">
-        <%= link_to "Crear una cuenta", new_user_registration_path, class: "assistant-btn" %>
-        <%= link_to "Iniciar sesión", new_user_session_path, class: "assistant-btn" %>
+        <div>
+          <strong>Paso 3</strong>
+          <p>Usa inteligencia artificial para generar contenido.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
+  <nav class="dashboard-mobile-nav">
+    <%= link_to "Inicio", dashboard_index_path %>
+    <%= link_to "Campañas", campaigns_path %>
+    <%= link_to "Inventario", inventory_index_path %>
+    <%= link_to "IA", ai_index_path %>
+  </nav>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const message = document.getElementById("dashboard-assistant-message");
+  if (!message) return;
+
+  const messages = [
+    "Hola. Estoy listo para ayudarte a comenzar.",
+    "Puedes crear campañas para promocionar tu negocio.",
+    "También puedes organizar productos dentro del inventario.",
+    "La inteligencia artificial puede ayudarte a generar ideas de contenido.",
+    "Empieza por crear tu primera campaña o agregar tu primer producto."
+  ];
+
+  let index = 0;
+
+  setInterval(function () {
+    index = (index + 1) % messages.length;
+    message.style.opacity = "0";
+
+    setTimeout(function () {
+      message.textContent = messages[index];
+      message.style.opacity = "1";
+    }, 300);
+  }, 3000);
+});
+</script>
