@@ -1,14 +1,62 @@
+<div class="ai-auth-page">
+  <div class="ai-auth-glow ai-auth-glow-one"></div>
+  <div class="ai-auth-glow ai-auth-glow-two"></div>
+
+  <section class="ai-auth-card">
+    <div class="ai-auth-brand">
+      <p>AI-Link Marketing Digital</p>
+      <h1>Iniciar sesión</h1>
+      <span>Accede a tu panel para administrar campañas, inventario y contenido inteligente.</span>
+    </div>
+
+    <div class="ai-auth-assistant">
+      <div class="ai-assistant-face">
+        <div class="ai-assistant-eye"></div>
+        <div class="ai-assistant-eye"></div>
+      </div>
+
+      <div class="ai-assistant-text" id="assistant-message">
+        Bienvenido a AI-Link. Inicia sesión para continuar.
+      </div>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "ai-auth-form" }) do |f| %>
+      <div class="ai-auth-field">
+        <%= f.label :email, "Correo electrónico" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "correo@ejemplo.com" %>
+      </div>
+
+      <div class="ai-auth-field">
+        <%= f.label :password, "Contraseña" %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "Ingresa tu contraseña" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="ai-auth-check">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, "Recordarme" %>
+        </div>
+      <% end %>
+
+      <%= f.submit "Entrar", class: "ai-auth-submit" %>
+    <% end %>
+
+    <div class="ai-auth-links">
+      <%= link_to "Crear cuenta", new_user_registration_path %>
+      <%= link_to "Volver al inicio", root_path %>
+    </div>
+  </section>
+</div>
+
 <script>
 document.addEventListener("turbo:load", function () {
-
   const assistantMessage = document.getElementById("assistant-message");
-
   if (!assistantMessage) return;
 
   const messages = [
     "Bienvenido a AI-Link. Inicia sesión para continuar.",
     "AI-Link te ayuda a gestionar campañas de marketing digital desde un solo lugar.",
-    "Puedes organizar productos, servicios e inventario fácilmente.",
+    "Puedes organizar productos y servicios dentro de tu inventario.",
     "Utiliza inteligencia artificial para generar contenido y nuevas ideas.",
     "Analiza el rendimiento de tus estrategias desde tu panel principal.",
     "Estoy aquí para ayudarte durante tu experiencia en la plataforma."
@@ -16,56 +64,14 @@ document.addEventListener("turbo:load", function () {
 
   let currentMessage = 0;
 
-  setInterval(() => {
-    currentMessage++;
-
-    if (currentMessage >= messages.length) {
-      currentMessage = 0;
-    }
-
+  setInterval(function () {
+    currentMessage = (currentMessage + 1) % messages.length;
     assistantMessage.style.opacity = "0";
 
-    setTimeout(() => {
+    setTimeout(function () {
       assistantMessage.textContent = messages[currentMessage];
       assistantMessage.style.opacity = "1";
     }, 300);
-
   }, 3000);
-
-});
-</script><script>
-document.addEventListener("turbo:load", function () {
-
-  const assistantMessage = document.getElementById("assistant-message");
-
-  if (!assistantMessage) return;
-
-  const messages = [
-    "Bienvenido a AI-Link. Inicia sesión para continuar.",
-    "AI-Link te ayuda a gestionar campañas de marketing digital desde un solo lugar.",
-    "Puedes organizar productos, servicios e inventario fácilmente.",
-    "Utiliza inteligencia artificial para generar contenido y nuevas ideas.",
-    "Analiza el rendimiento de tus estrategias desde tu panel principal.",
-    "Estoy aquí para ayudarte durante tu experiencia en la plataforma."
-  ];
-
-  let currentMessage = 0;
-
-  setInterval(() => {
-    currentMessage++;
-
-    if (currentMessage >= messages.length) {
-      currentMessage = 0;
-    }
-
-    assistantMessage.style.opacity = "0";
-
-    setTimeout(() => {
-      assistantMessage.textContent = messages[currentMessage];
-      assistantMessage.style.opacity = "1";
-    }, 300);
-
-  }, 3000);
-
 });
 </script>
