@@ -25,9 +25,14 @@
       </p>
 
       <div class="cyber-actions">
-        <%= link_to "Iniciar sesión", new_user_session_path, class: "cyber-btn primary" %>
-        <%= link_to "Registrarse", new_user_registration_path, class: "cyber-btn secondary" %>
-      </div>
+  <% if user_signed_in? %>
+    <%= link_to "Ir al panel", dashboard_index_path, class: "cyber-btn primary" %>
+    <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "cyber-btn secondary cyber-logout-btn" %>
+  <% else %>
+    <%= link_to "Iniciar sesión", new_user_session_path, class: "cyber-btn primary" %>
+    <%= link_to "Registrarse", new_user_registration_path, class: "cyber-btn secondary" %>
+  <% end %>
+</div>
     </section>
   </main>
 </div>
