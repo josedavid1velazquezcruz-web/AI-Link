@@ -1,33 +1,106 @@
-<div class="cyber-home">
-  <header class="cyber-header">
-    <div class="cyber-title">
-      <p>Marketing digital inteligente</p>
-      <h1>AI-Link</h1>
-    </div>
-
-    <div class="cyber-mascot">
-      <div class="mascot-face">
-        <div class="mascot-eye"></div>
-        <div class="mascot-eye"></div>
+<div class="haru-dashboard">
+  <main class="haru-main">
+    <section class="haru-header">
+      <div>
+        <p>AI-Link Marketing Digital</p>
+        <h1>Panel principal</h1>
       </div>
 
-      <div class="mascot-message">
-        Hola, soy tu asistente. Estoy listo para ayudarte a comenzar.
+      <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "haru-logout" %>
+    </section>
+
+    <section class="haru-assistant-box">
+      <div class="haru-face">
+        <div class="haru-eye"></div>
+        <div class="haru-eye"></div>
       </div>
-    </div>
-  </header>
 
-  <main class="cyber-center">
-    <section class="cyber-card">
-      <h2>Administra tu marketing en un solo lugar</h2>
-      <p>
-        Crea campañas, organiza tu inventario y genera ideas de contenido con inteligencia artificial.
-      </p>
+      <div>
+        <h2>Haru</h2>
+        <p id="haru-message">
+          Hola, soy Haru. Te guiaré paso a paso dentro de AI-Link.
+        </p>
+      </div>
+    </section>
 
-      <div class="cyber-actions">
-        <%= link_to "Iniciar sesión", new_user_session_path, class: "cyber-btn primary" %>
-        <%= link_to "Registrarse", new_user_registration_path, class: "cyber-btn secondary" %>
+    <section class="haru-slider">
+      <div class="haru-slide-card">
+        <span>Paso 1</span>
+        <h3>Agrega tu inventario</h3>
+        <p>Registra productos o servicios para tenerlos listos al crear campañas.</p>
+        <%= link_to "Ir a inventario", inventory_index_path %>
+      </div>
+
+      <div class="haru-slide-card">
+        <span>Paso 2</span>
+        <h3>Crea una campaña</h3>
+        <p>Organiza una campaña para promocionar tus productos o servicios.</p>
+        <%= link_to "Ir a campañas", campaigns_path %>
+      </div>
+
+      <div class="haru-slide-card">
+        <span>Paso 3</span>
+        <h3>Usa inteligencia artificial</h3>
+        <p>Genera ideas, textos y contenido para tus publicaciones.</p>
+        <%= link_to "Usar IA", ai_index_path %>
+      </div>
+
+      <div class="haru-slide-card">
+        <span>Paso 4</span>
+        <h3>Revisa tu avance</h3>
+        <p>Consulta tu panel para saber qué tienes creado y qué falta completar.</p>
+        <%= link_to "Ver panel", dashboard_index_path %>
       </div>
     </section>
   </main>
+
+  <nav class="haru-bottom-nav">
+    <%= link_to dashboard_index_path do %>
+      <span>IN</span>
+      <small>Inicio</small>
+    <% end %>
+
+    <%= link_to campaigns_path do %>
+      <span>CA</span>
+      <small>Campañas</small>
+    <% end %>
+
+    <%= link_to inventory_index_path do %>
+      <span>IV</span>
+      <small>Inventario</small>
+    <% end %>
+
+    <%= link_to ai_index_path do %>
+      <span>IA</span>
+      <small>Asistente</small>
+    <% end %>
+  </nav>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const haruMessage = document.getElementById("haru-message");
+  if (!haruMessage) return;
+
+  const messages = [
+    "Hola, soy Haru. Te guiaré paso a paso dentro de AI-Link.",
+    "Primero puedes agregar productos o servicios en el inventario.",
+    "Después puedes crear campañas para promocionar tu negocio.",
+    "También puedes usar inteligencia artificial para generar ideas de contenido.",
+    "Usa el menú inferior para moverte rápido entre las secciones.",
+    "Estoy aquí para explicarte cada parte de la plataforma."
+  ];
+
+  let index = 0;
+
+  setInterval(function () {
+    index = (index + 1) % messages.length;
+    haruMessage.style.opacity = "0";
+
+    setTimeout(function () {
+      haruMessage.textContent = messages[index];
+      haruMessage.style.opacity = "1";
+    }, 300);
+  }, 3000);
+});
+</script>
