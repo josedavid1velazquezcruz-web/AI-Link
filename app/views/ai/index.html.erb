@@ -1,90 +1,78 @@
-<div class="ai-page">
-  <header class="ai-header">
+<div class="haru-ai-page">
+  <header class="haru-ai-header">
     <div>
       <p>AI-Link Inteligencia Artificial</p>
-      <h1>Asistente Haru</h1>
-      <span>Analiza imágenes, genera ideas y prepara contenido para tus campañas.</span>
+      <h1>Haru</h1>
+      <span>Tu asistente para analizar imágenes, generar ideas y preparar campañas.</span>
     </div>
 
-    <%= link_to "Volver al panel", dashboard_index_path, class: "ai-back-btn" %>
+    <%= link_to "Volver al panel", dashboard_index_path, class: "haru-ai-back" %>
   </header>
 
-  <section class="ai-hero">
-    <div class="ai-haru-area">
-      <button class="ai-haru-button" id="haru-open-panel" type="button">
-        <div class="ai-haru-face">
-          <div class="ai-haru-eye"></div>
-          <div class="ai-haru-eye"></div>
+  <main class="haru-ai-layout">
+    <section class="haru-ai-assistant">
+      <button class="haru-ai-face-button" id="haruOpenTools" type="button">
+        <div class="haru-ai-face" id="haruFace">
+          <div class="haru-ai-eye"></div>
+          <div class="haru-ai-eye"></div>
         </div>
       </button>
 
-      <div class="ai-haru-message">
+      <div class="haru-ai-status">
         <h2>Haru</h2>
-        <p id="haru-ai-message">
-          Hola, soy Haru. Tócame para iniciar un análisis con imagen.
-        </p>
+        <p id="haruStatusText">Estoy lista para ayudarte. Toca mi rostro o elige una acción.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="ai-info-card">
-      <h3>¿Qué puedes hacer aquí?</h3>
-      <p>
-        Este apartado está preparado para analizar fotos de productos, generar ideas
-        de contenido y ayudarte a crear campañas usando diferentes modelos de IA.
-      </p>
-    </div>
-  </section>
+    <section class="haru-ai-chat">
+      <div class="haru-chat-window" id="haruChatWindow">
+        <div class="haru-message haru-message-bot">
+          Hola, soy Haru. Puedo ayudarte a analizar una imagen, crear ideas de campaña o generar anuncios.
+        </div>
+      </div>
 
-  <section class="ai-actions-panel" id="haru-actions-panel">
-    <div class="ai-actions-card">
-      <div class="ai-actions-header">
+      <div class="haru-action-grid">
+        <button type="button" class="haru-action-btn" data-action="image">Analizar imagen</button>
+        <button type="button" class="haru-action-btn" data-action="ad">Generar anuncio</button>
+        <button type="button" class="haru-action-btn" data-action="campaign">Idea de campaña</button>
+        <button type="button" class="haru-action-btn" data-action="clear">Limpiar chat</button>
+      </div>
+    </section>
+  </main>
+
+  <section class="haru-tools-panel" id="haruToolsPanel">
+    <div class="haru-tools-card">
+      <div class="haru-tools-header">
         <div>
-          <p>Opciones de Haru</p>
-          <h2>Elige cómo quieres empezar</h2>
+          <p>Herramientas de Haru</p>
+          <h2>Elige cómo quieres analizar</h2>
         </div>
 
-        <button type="button" id="haru-close-panel" class="ai-close-btn">Cerrar</button>
+        <button type="button" id="haruCloseTools" class="haru-close-btn">Cerrar</button>
       </div>
 
-      <div class="ai-upload-grid">
-        <label class="ai-upload-option">
-          <span>Tomar foto</span>
-          <small>Usa la cámara del dispositivo para capturar una imagen.</small>
-          <input type="file" accept="image/*" capture="environment" class="ai-hidden-input">
+      <div class="haru-upload-grid">
+        <label class="haru-upload-option">
+          <strong>Tomar foto</strong>
+          <span>Abre la cámara del celular para capturar un producto.</span>
+          <input type="file" accept="image/*" capture="environment" class="haru-image-input">
         </label>
 
-        <label class="ai-upload-option">
-          <span>Subir foto</span>
-          <small>Selecciona una imagen guardada en tu celular o computadora.</small>
-          <input type="file" accept="image/*" class="ai-hidden-input" id="ai-image-input">
+        <label class="haru-upload-option">
+          <strong>Subir foto</strong>
+          <span>Selecciona una imagen desde tu dispositivo.</span>
+          <input type="file" accept="image/*" class="haru-image-input">
         </label>
       </div>
 
-      <div class="ai-preview-box" id="ai-preview-box">
-        <p>Cuando selecciones una imagen, aparecerá aquí la vista previa.</p>
-        <img id="ai-preview-image" alt="Vista previa de imagen">
+      <div class="haru-preview" id="haruPreview">
+        <p>No has seleccionado ninguna imagen todavía.</p>
+        <img id="haruPreviewImage" alt="Vista previa de imagen">
       </div>
     </div>
   </section>
 
-  <section class="ai-future-grid">
-    <div>
-      <h3>Análisis de imagen</h3>
-      <p>Haru podrá reconocer productos, colores, estilo visual y oportunidades de mejora.</p>
-    </div>
-
-    <div>
-      <h3>Generación de anuncios</h3>
-      <p>Después del análisis, se podrán crear textos para redes, campañas y promociones.</p>
-    </div>
-
-    <div>
-      <h3>Sistema de varias IAs</h3>
-      <p>Más adelante podremos cambiar automáticamente entre modelos si un token se acaba.</p>
-    </div>
-  </section>
-
-  <nav class="ai-bottom-nav">
+  <nav class="haru-ai-bottom-nav">
     <%= link_to "Inicio", dashboard_index_path %>
     <%= link_to "Campañas", campaigns_index_path %>
     <%= link_to "Inventario", inventory_index_path %>
@@ -94,31 +82,86 @@
 
 <script>
 document.addEventListener("turbo:load", function () {
-  const openButton = document.getElementById("haru-open-panel");
-  const closeButton = document.getElementById("haru-close-panel");
-  const panel = document.getElementById("haru-actions-panel");
-  const message = document.getElementById("haru-ai-message");
-  const imageInputs = document.querySelectorAll(".ai-hidden-input");
-  const previewImage = document.getElementById("ai-preview-image");
-  const previewBox = document.getElementById("ai-preview-box");
+  const toolsPanel = document.getElementById("haruToolsPanel");
+  const openTools = document.getElementById("haruOpenTools");
+  const closeTools = document.getElementById("haruCloseTools");
+  const statusText = document.getElementById("haruStatusText");
+  const chatWindow = document.getElementById("haruChatWindow");
+  const face = document.getElementById("haruFace");
+  const imageInputs = document.querySelectorAll(".haru-image-input");
+  const preview = document.getElementById("haruPreview");
+  const previewImage = document.getElementById("haruPreviewImage");
+  const actionButtons = document.querySelectorAll(".haru-action-btn");
 
-  if (openButton && panel) {
-    openButton.addEventListener("click", function () {
-      panel.classList.add("active");
-      if (message) {
-        message.textContent = "Elige si quieres tomar una foto o subir una imagen.";
-      }
+  function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "haru-message " + type;
+    message.textContent = text;
+    chatWindow.appendChild(message);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  function setHaruState(text, thinking) {
+    statusText.textContent = text;
+
+    if (thinking) {
+      face.classList.add("thinking");
+    } else {
+      face.classList.remove("thinking");
+    }
+  }
+
+  function simulateHaruResponse(text) {
+    setHaruState("Estoy pensando una respuesta...", true);
+
+    setTimeout(function () {
+      addMessage(text, "haru-message-bot");
+      setHaruState("Lista para ayudarte con el siguiente paso.", false);
+    }, 1200);
+  }
+
+  if (openTools) {
+    openTools.addEventListener("click", function () {
+      toolsPanel.classList.add("active");
+      addMessage("Quiero analizar una imagen.", "haru-message-user");
+      simulateHaruResponse("Puedes tomar una foto o subir una imagen. Después la analizaremos con IA.");
     });
   }
 
-  if (closeButton && panel) {
-    closeButton.addEventListener("click", function () {
-      panel.classList.remove("active");
-      if (message) {
-        message.textContent = "Tócame cuando quieras iniciar otro análisis.";
-      }
+  if (closeTools) {
+    closeTools.addEventListener("click", function () {
+      toolsPanel.classList.remove("active");
+      setHaruState("Panel cerrado. Puedes tocarme de nuevo cuando quieras.", false);
     });
   }
+
+  actionButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const action = button.dataset.action;
+
+      if (action === "image") {
+        toolsPanel.classList.add("active");
+        addMessage("Quiero analizar una imagen.", "haru-message-user");
+        simulateHaruResponse("Perfecto. Sube una foto o toma una imagen del producto.");
+      }
+
+      if (action === "ad") {
+        addMessage("Quiero generar un anuncio.", "haru-message-user");
+        simulateHaruResponse("Puedo ayudarte a crear un anuncio. Después conectaremos esta función con varios modelos de IA.");
+      }
+
+      if (action === "campaign") {
+        addMessage("Quiero una idea de campaña.", "haru-message-user");
+        simulateHaruResponse("Una buena campaña puede iniciar con el producto, el público objetivo y el canal donde se publicará.");
+      }
+
+      if (action === "clear") {
+        chatWindow.innerHTML = "";
+        addMessage("Hola, soy Haru. Empezamos de nuevo. ¿Qué quieres hacer?", "haru-message-bot");
+        setHaruState("Chat reiniciado. Estoy lista para ayudarte.", false);
+      }
+    });
+  });
 
   imageInputs.forEach(function (input) {
     input.addEventListener("change", function () {
@@ -127,11 +170,10 @@ document.addEventListener("turbo:load", function () {
 
       const imageUrl = URL.createObjectURL(file);
       previewImage.src = imageUrl;
-      previewBox.classList.add("has-image");
+      preview.classList.add("has-image");
 
-      if (message) {
-        message.textContent = "Imagen cargada. Después conectaremos aquí el análisis con IA.";
-      }
+      addMessage("Ya seleccioné una imagen.", "haru-message-user");
+      simulateHaruResponse("Imagen cargada correctamente. En la siguiente fase analizaré el contenido, categoría, colores y posibles anuncios.");
     });
   });
 });

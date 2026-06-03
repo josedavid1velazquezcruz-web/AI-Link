@@ -1052,3 +1052,344 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.haru-ai-page {
+  min-height: 100vh;
+  padding: 32px;
+  padding-bottom: 96px;
+  color: white;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.28), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.28), transparent 30%),
+    linear-gradient(135deg, #050816, #0b1020 45%, #111827);
+}
+
+.haru-ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.haru-ai-header p {
+  margin: 0 0 8px;
+  color: #93c5fd;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.haru-ai-header h1 {
+  margin: 0;
+  font-size: clamp(42px, 8vw, 90px);
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.45);
+}
+
+.haru-ai-header span {
+  display: block;
+  color: #dbeafe;
+  max-width: 660px;
+  line-height: 1.5;
+}
+
+.haru-ai-back,
+.haru-close-btn {
+  color: white;
+  text-decoration: none;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 13px 18px;
+  border-radius: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.haru-ai-layout {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.haru-ai-assistant,
+.haru-ai-chat,
+.haru-tools-card {
+  background: rgba(15, 23, 42, 0.76);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  border-radius: 30px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.haru-ai-assistant {
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.haru-ai-face-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.haru-ai-face {
+  width: 130px;
+  height: 130px;
+  border-radius: 44px;
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  box-shadow: 0 0 45px rgba(56, 189, 248, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.haru-ai-face:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.haru-ai-face.thinking {
+  animation: haruPulse 1s infinite alternate;
+}
+
+@keyframes haruPulse {
+  from {
+    transform: scale(1);
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
+  }
+
+  to {
+    transform: scale(1.04);
+    box-shadow: 0 0 65px rgba(168, 85, 247, 0.7);
+  }
+}
+
+.haru-ai-eye {
+  width: 14px;
+  height: 26px;
+  background: white;
+  border-radius: 20px;
+}
+
+.haru-ai-status h2 {
+  margin: 0 0 10px;
+  font-size: 34px;
+}
+
+.haru-ai-status p {
+  color: #dbeafe;
+  line-height: 1.6;
+}
+
+.haru-ai-chat {
+  padding: 22px;
+}
+
+.haru-chat-window {
+  height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+}
+
+.haru-message {
+  max-width: 86%;
+  padding: 13px 15px;
+  border-radius: 18px;
+  line-height: 1.45;
+}
+
+.haru-message-bot {
+  align-self: flex-start;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  color: #e0f2fe;
+}
+
+.haru-message-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+}
+
+.haru-action-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.haru-action-btn {
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  background: rgba(255, 255, 255, 0.09);
+  color: white;
+  padding: 13px;
+  border-radius: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.haru-tools-panel {
+  display: none;
+  margin-top: 24px;
+}
+
+.haru-tools-panel.active {
+  display: block;
+}
+
+.haru-tools-card {
+  padding: 26px;
+}
+
+.haru-tools-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.haru-tools-header p {
+  color: #93c5fd;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+.haru-tools-header h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.haru-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.haru-upload-option {
+  display: block;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  cursor: pointer;
+}
+
+.haru-upload-option strong {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.haru-upload-option span {
+  color: #dbeafe;
+  line-height: 1.4;
+}
+
+.haru-image-input {
+  display: none;
+}
+
+.haru-preview {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(2, 6, 23, 0.45);
+  border: 1px dashed rgba(147, 197, 253, 0.28);
+  color: #dbeafe;
+}
+
+.haru-preview img {
+  display: none;
+  width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+.haru-preview.has-image p {
+  display: none;
+}
+
+.haru-preview.has-image img {
+  display: block;
+}
+
+.haru-ai-bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 76px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(15, 23, 42, 0.96);
+  border-top: 1px solid rgba(147, 197, 253, 0.22);
+  backdrop-filter: blur(18px);
+  z-index: 1000;
+}
+
+.haru-ai-bottom-nav a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .haru-ai-page {
+    padding: 20px;
+    padding-bottom: 96px;
+  }
+
+  .haru-ai-header {
+    flex-direction: column;
+  }
+
+  .haru-ai-back {
+    width: 100%;
+    text-align: center;
+  }
+
+  .haru-ai-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .haru-ai-assistant {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .haru-ai-face {
+    width: 110px;
+    height: 110px;
+  }
+
+  .haru-chat-window {
+    height: 300px;
+  }
+
+  .haru-action-grid,
+  .haru-upload-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .haru-tools-header {
+    flex-direction: column;
+  }
+
+  .haru-close-btn {
+    width: 100%;
+  }
+}
