@@ -27,8 +27,22 @@
     <section class="haru-ai-chat">
       <div class="haru-chat-window" id="haruChatWindow">
         <div class="haru-message haru-message-bot">
-          Hola, soy Haru. Puedo ayudarte a analizar una imagen, crear ideas de campaña o generar anuncios.
+          Hola, soy Haru. Puedo ayudarte a analizar una imagen, preparar un producto y generar ideas de campaña.
         </div>
+
+        <% if @image_result.present? %>
+          <div class="haru-message haru-message-bot">
+            <%= @image_result %>
+          </div>
+
+          <div class="haru-message haru-message-bot">
+            Producto preparado: <%= @generated_title %>
+          </div>
+
+          <div class="haru-message haru-message-bot">
+            Descripción generada: <%= @generated_description %>
+          </div>
+        <% end %>
       </div>
 
       <div class="haru-action-grid">
@@ -40,35 +54,71 @@
     </section>
   </main>
 
-  <section class="haru-tools-panel" id="haruToolsPanel">
+  <section class="haru-tools-panel <%= 'active' if @image_result.present? %>" id="haruToolsPanel">
     <div class="haru-tools-card">
       <div class="haru-tools-header">
         <div>
           <p>Herramientas de Haru</p>
-          <h2>Elige cómo quieres analizar</h2>
+          <h2>Analizar producto</h2>
         </div>
 
         <button type="button" id="haruCloseTools" class="haru-close-btn">Cerrar</button>
       </div>
 
-      <div class="haru-upload-grid">
-        <label class="haru-upload-option">
-          <strong>Tomar foto</strong>
-          <span>Abre la cámara del celular para capturar un producto.</span>
-          <input type="file" accept="image/*" capture="environment" class="haru-image-input">
-        </label>
+      <%= form_with url: ai_analyze_image_path, method: :post, multipart: true, local: true, class: "haru-upload-form" do |f| %>
+        <div class="haru-upload-grid">
+          <label class="haru-upload-option">
+            <strong>Tomar foto</strong>
+            <span>Abre la cámara del celular para capturar un producto.</span>
+            <%= f.file_field :image, accept: "image/*", capture: "environment", class: "haru-image-input" %>
+          </label>
 
-        <label class="haru-upload-option">
-          <strong>Subir foto</strong>
-          <span>Selecciona una imagen desde tu dispositivo.</span>
-          <input type="file" accept="image/*" class="haru-image-input">
-        </label>
-      </div>
+          <label class="haru-upload-option">
+            <strong>Subir foto</strong>
+            <span>Selecciona una imagen desde tu dispositivo.</span>
+            <%= f.file_field :image, accept: "image/*", class: "haru-image-input" %>
+          </label>
+        </div>
 
-      <div class="haru-preview" id="haruPreview">
-        <p>No has seleccionado ninguna imagen todavía.</p>
-        <img id="haruPreviewImage" alt="Vista previa de imagen">
-      </div>
+        <div class="haru-preview" id="haruPreview">
+          <p>No has seleccionado ninguna imagen todavía.</p>
+          <img id="haruPreviewImage" alt="Vista previa de imagen">
+        </div>
+
+        <div class="haru-extra-fields">
+          <%= f.text_field :name, placeholder: "Nombre del producto", class: "haru-input" %>
+          <%= f.text_area :description, placeholder: "Descripción breve", class: "haru-input", rows: 3 %>
+          <%= f.number_field :price, placeholder: "Precio", class: "haru-input", step: "0.01" %>
+          <%= f.number_field :quantity, placeholder: "Cantidad", class: "haru-input" %>
+        </div>
+
+        <%= f.submit "Analizar con Haru", class: "haru-submit-btn", id: "haruAnalyzeSubmit" %>
+      <% end %>
+
+      <% if @image_result.present? %>
+        <div class="haru-result-card">
+          <h3>Resultado de Haru</h3>
+
+          <p><%= @image_result %></p>
+
+          <div class="haru-result-data">
+            <p><strong>Nombre:</strong> <%= @generated_title %></p>
+            <p><strong>Descripción:</strong> <%= @generated_description %></p>
+            <p><strong>Precio:</strong> <%= @generated_price %></p>
+            <p><strong>Cantidad:</strong> <%= @generated_quantity %></p>
+          </div>
+
+          <%= form_with url: ai_export_product_path, method: :post, local: true do %>
+            <%= hidden_field_tag :name, @generated_title %>
+            <%= hidden_field_tag :description, @generated_description %>
+            <%= hidden_field_tag :price, @generated_price %>
+            <%= hidden_field_tag :quantity, @generated_quantity %>
+            <%= hidden_field_tag :image_blob_signed_id, @image_blob_signed_id %>
+
+            <%= submit_tag "Exportar al inventario", class: "haru-submit-btn" %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </section>
 
@@ -92,8 +142,11 @@ document.addEventListener("turbo:load", function () {
   const preview = document.getElementById("haruPreview");
   const previewImage = document.getElementById("haruPreviewImage");
   const actionButtons = document.querySelectorAll(".haru-action-btn");
+  const analyzeSubmit = document.getElementById("haruAnalyzeSubmit");
 
   function addMessage(text, type) {
+    if (!chatWindow) return;
+
     const message = document.createElement("div");
     message.className = "haru-message " + type;
     message.textContent = text;
@@ -102,6 +155,8 @@ document.addEventListener("turbo:load", function () {
   }
 
   function setHaruState(text, state = "normal") {
+    if (!statusText || !face) return;
+
     statusText.textContent = text;
 
     face.classList.remove(
@@ -124,25 +179,11 @@ document.addEventListener("turbo:load", function () {
     }, 1200);
   }
 
-  function simulateImageAnalysis() {
-    setHaruState("Analizando imagen...", "analyzing");
-
-    setTimeout(function () {
-      addMessage("Objeto detectado: Producto", "haru-message-bot");
-      addMessage("Categoría estimada: Comercial", "haru-message-bot");
-      addMessage("La imagen parece apta para marketing digital.", "haru-message-bot");
-      addMessage("Recomendación: usa una descripción clara, precio visible y una llamada a la acción.", "haru-message-bot");
-      addMessage("¿Quieres generar un anuncio para este producto?", "haru-message-bot");
-
-      setHaruState("Análisis completado.", "success");
-    }, 2500);
-  }
-
   if (openTools) {
     openTools.addEventListener("click", function () {
       toolsPanel.classList.add("active");
       addMessage("Quiero analizar una imagen.", "haru-message-user");
-      simulateHaruResponse("Puedes tomar una foto o subir una imagen. Después la analizaremos con IA.");
+      simulateHaruResponse("Puedes tomar una foto o subir una imagen. Después presiona Analizar con Haru.");
     });
   }
 
@@ -169,7 +210,6 @@ document.addEventListener("turbo:load", function () {
 
         setTimeout(function () {
           addMessage("Anuncio sugerido: Presenta tu producto con una frase directa, una ventaja principal y una invitación a comprar.", "haru-message-bot");
-          addMessage("Ejemplo: Haz que tu negocio destaque con una solución práctica, atractiva y lista para tus clientes.", "haru-message-bot");
           setHaruState("Anuncio generado.", "success");
         }, 1600);
       }
@@ -179,8 +219,7 @@ document.addEventListener("turbo:load", function () {
         setHaruState("Preparando idea de campaña...", "thinking");
 
         setTimeout(function () {
-          addMessage("Idea de campaña: Publica una imagen del producto, explica su beneficio principal y ofrece una promoción limitada.", "haru-message-bot");
-          addMessage("Canales sugeridos: redes sociales, historias, grupos locales y mensajes directos.", "haru-message-bot");
+          addMessage("Idea de campaña: publica una imagen del producto, explica su beneficio principal y ofrece una promoción limitada.", "haru-message-bot");
           setHaruState("Idea de campaña lista.", "success");
         }, 1600);
       }
@@ -207,8 +246,15 @@ document.addEventListener("turbo:load", function () {
       preview.classList.add("has-image");
 
       addMessage("Ya seleccioné una imagen.", "haru-message-user");
-      simulateImageAnalysis();
+      setHaruState("Imagen lista. Presiona Analizar con Haru para continuar.", "success");
     });
   });
+
+  if (analyzeSubmit) {
+    analyzeSubmit.addEventListener("click", function () {
+      addMessage("Analiza esta imagen.", "haru-message-user");
+      setHaruState("Enviando imagen para análisis...", "analyzing");
+    });
+  }
 });
 </script>
