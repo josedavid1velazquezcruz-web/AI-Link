@@ -28,6 +28,11 @@ enhanced_file.rewind
 
 @ai_provider = "Gemini"
 @ai_analysis = HaruGeminiService.analyze_image(enhanced_file)
+if @ai_analysis["type"] == "non_product"
+  @image_result = "La imagen fue analizada correctamente, pero no contiene un producto para inventario."
+else
+  @image_result = "Producto preparado correctamente. Puedes exportarlo al inventario."
+end
 
     Rails.logger.info "========== HARU =========="
     Rails.logger.info @ai_analysis.inspect

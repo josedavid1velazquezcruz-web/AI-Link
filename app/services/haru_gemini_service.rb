@@ -12,32 +12,46 @@ class HaruGeminiService
   def analyze_image(image)
     image_data = Base64.strict_encode64(image.read)
 
-    prompt = <<~PROMPT
-      Eres Haru, asistente de AI-Link Marketing Suite.
+  prompt = <<~PROMPT
+  Eres Haru, asistente de AI-Link Marketing Suite.
 
-      Analiza la imagen y detecta si contiene un producto.
+  Primero determina qué tipo de imagen es:
 
-      Responde SOLO en JSON válido con este formato:
+  - Producto físico
+  - Persona
+  - Animal
+  - Ilustración/Anime
+  - Paisaje
+  - Logo
+  - Otro
 
-      {
-        "name": "nombre del producto",
-        "description": "descripción breve",
-        "price": 0,
-        "quantity": 1,
-        "category": "categoría",
-        "marketing_text": "texto promocional corto"
-      }
+  Si es un producto físico, responde SOLO en JSON:
 
-      Si no puedes detectar el producto, usa:
-      {
-        "name": "Producto no identificado",
-        "description": "No pude identificar claramente el producto en la imagen.",
-        "price": 0,
-        "quantity": 1,
-        "category": "Sin categoría",
-        "marketing_text": "Sube una imagen más clara para ayudarte mejor."
-      }
-    PROMPT
+  {
+    "type": "product",
+    "name": "nombre del producto",
+    "description": "descripción breve",
+    "price": 0,
+    "quantity": 1,
+    "category": "categoría",
+    "marketing_text": "texto promocional corto"
+  }
+
+  Si NO es un producto, responde SOLO en JSON:
+
+  {
+    "type": "non_product",
+    "name": "No es un producto",
+    "description": "Describe claramente lo que aparece en la imagen",
+    "category": "Anime, Persona, Animal, Paisaje, Logo u Otro",
+    "marketing_text": "",
+    "price": 0,
+    "quantity": 0
+  }
+
+  Nunca inventes productos.
+  Si no ves un producto físico real, marca la imagen como non_product.
+PROMPT
 
     response = Faraday.post("#{API_URL}?key=#{ENV["GEMINI_API_KEY"]}") do |req|
       req.headers["Content-Type"] = "application/json"
