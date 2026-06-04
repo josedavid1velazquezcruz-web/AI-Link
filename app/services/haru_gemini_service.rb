@@ -1,46 +1,54 @@
-require "httparty"
+require "faraday"
+require "json"
 require "base64"
 
 class HaruGeminiService
+  API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
-  def self.analyze_image(uploaded_file)
-    new.analyze_image(uploaded_file)
+  def self.analyze_image(image)
+    new.analyze_image(image)
   end
 
-  def analyze_image(uploaded_file)
+  def analyze_image(image)
+    image_data = Base64.strict_encode64(image.read)
 
-    image_data = Base64.strict_encode64(uploaded_file.read)
+    prompt = <<~PROMPT
+      Eres Haru, asistente de AI-Link Marketing Suite.
 
-    response = HTTParty.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=#{ENV['GEMINI_API_KEY']}",
-      headers: {
-        "Content-Type" => "application/json"
-      },
-      body: {
+      Analiza la imagen y detecta si contiene un producto.
+
+      Responde SOLO en JSON válido con este formato:
+
+      {
+        "name": "nombre del producto",
+        "description": "descripción breve",
+        "price": 0,
+        "quantity": 1,
+        "category": "categoría",
+        "marketing_text": "texto promocional corto"
+      }
+
+      Si no puedes detectar el producto, usa:
+      {
+        "name": "Producto no identificado",
+        "description": "No pude identificar claramente el producto en la imagen.",
+        "price": 0,
+        "quantity": 1,
+        "category": "Sin categoría",
+        "marketing_text": "Sube una imagen más clara para ayudarte mejor."
+      }
+    PROMPT
+
+    response = Faraday.post("#{API_URL}?key=#{ENV["GEMINI_API_KEY"]}") do |req|
+      req.headers["Content-Type"] = "application/json"
+      req.body = {
         contents: [
           {
             parts: [
-              {
-                text: <<~PROMPT
-                  Analiza esta imagen.
-
-                  Responde en español.
-
-                  Detecta:
-
-                  - Nombre del producto
-                  - Categoría
-                  - Colores principales
-                  - Descripción comercial
-                  - Precio sugerido
-                  - Idea de campaña para marketing
-
-                  Responde como Haru.
-                PROMPT
-              },
+              { text: prompt },
               {
                 inline_data: {
-                  mime_type: uploaded_file.content_type,
+                  mime_type: image.content_type,
                   data: image_data
                 }
               }
@@ -48,21 +56,20 @@ class HaruGeminiService
           }
         ]
       }.to_json
-    )
+    end
 
-    json = JSON.parse(response.body)
+    data = JSON.parse(response.body)
+    text = data.dig("candidates", 0, "content", "parts", 0, "text")
 
-    json.dig(
-      "candidates",
-      0,
-      "content",
-      "parts",
-      0,
-      "text"
-    )
-
+    JSON.parse(text.gsub("```json", "").gsub("```", "").strip)
   rescue => e
-    "Error Gemini: #{e.message}"
+    {
+      "name" => "Error con Haru",
+      "description" => e.message,
+      "price" => 0,
+      "quantity" => 1,
+      "category" => "Error",
+      "marketing_text" => "Haru no pudo analizar la imagen."
+    }
   end
-
 end

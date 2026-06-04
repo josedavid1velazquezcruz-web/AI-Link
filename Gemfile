@@ -76,3 +76,4 @@ gem "devise"
 gem "letter_opener_web", group: :development
 gem "ruby-openai"
 gem "httparty"
+gem "faraday"

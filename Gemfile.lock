@@ -329,6 +329,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  faraday
   httparty
   importmap-rails
   jbuilder
