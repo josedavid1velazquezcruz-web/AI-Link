@@ -23,7 +23,19 @@ class AiController < ApplicationController
 
     uploaded_file.rewind
 
-    @ai_analysis = HaruGeminiService.analyze_image(uploaded_file)
+enhanced_file = HaruImageEnhancerService.enhance(uploaded_file)
+enhanced_file.rewind
+
+@ai_provider = "Gemini"
+@ai_analysis = HaruGeminiService.analyze_image(enhanced_file)
+
+if @ai_analysis["category"] == "Error" || @ai_analysis["name"].to_s.include?("Error")
+  Rails.logger.info "Gemini falló. Haru intentará con ChatGPT."
+
+  enhanced_file.rewind
+  @ai_provider = "ChatGPT"
+  @ai_analysis = HaruOpenaiService.analyze_image(enhanced_file)
+end
 
     Rails.logger.info "========== HARU =========="
     Rails.logger.info @ai_analysis.inspect
