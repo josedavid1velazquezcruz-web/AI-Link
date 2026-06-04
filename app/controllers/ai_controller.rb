@@ -1,5 +1,4 @@
 class AiController < ApplicationController
-
   before_action :authenticate_user!
 
   def index
@@ -7,10 +6,6 @@ class AiController < ApplicationController
 
   def analyze_image
     uploaded_file = params[:image]
-    name = ""
-description = ""
-price = 0
-quantity = 1
 
     if uploaded_file.blank?
       @image_result = "Debes subir una imagen."
@@ -18,32 +13,28 @@ quantity = 1
       return
     end
 
-   image_bytes = uploaded_file.read
+    image_bytes = uploaded_file.read
 
-blob = ActiveStorage::Blob.create_and_upload!(
-  io: StringIO.new(image_bytes),
-  filename: uploaded_file.original_filename,
-  content_type: uploaded_file.content_type
-)
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new(image_bytes),
+      filename: uploaded_file.original_filename,
+      content_type: uploaded_file.content_type
+    )
 
-# AGREGAR ESTA LINEA
-uploaded_file.rewind
+    uploaded_file.rewind
 
-@generated_title = name
+    @ai_analysis = HaruGeminiService.analyze_image(uploaded_file)
 
-uploaded_file.rewind
+    Rails.logger.info "========== HARU =========="
+    Rails.logger.info @ai_analysis.inspect
+    Rails.logger.info "=========================="
 
-@ai_analysis =
-  HaruGeminiService.analyze_image(
-    uploaded_file
-  )
-
-Rails.logger.info "========== HARU =========="
-Rails.logger.info @ai_analysis.inspect
-Rails.logger.info "=========================="
-@generated_description = @ai_analysis
-  @generated_price = price
-    @generated_quantity = quantity
+    @generated_title = @ai_analysis["name"]
+    @generated_description = @ai_analysis["description"]
+    @generated_price = @ai_analysis["price"]
+    @generated_quantity = @ai_analysis["quantity"]
+    @generated_category = @ai_analysis["category"]
+    @generated_marketing_text = @ai_analysis["marketing_text"]
     @image_blob_signed_id = blob.signed_id
 
     @image_result = "Producto preparado correctamente. Puedes exportarlo al inventario."
@@ -65,5 +56,4 @@ Rails.logger.info "=========================="
 
     redirect_to "/inventory/index"
   end
-
 end
