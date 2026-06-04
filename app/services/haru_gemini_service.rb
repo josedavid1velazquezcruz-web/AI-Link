@@ -59,9 +59,34 @@ class HaruGeminiService
     end
 
     data = JSON.parse(response.body)
-    text = data.dig("candidates", 0, "content", "parts", 0, "text")
 
-    JSON.parse(text.gsub("```json", "").gsub("```", "").strip)
+Rails.logger.info "===== GEMINI RAW RESPONSE ====="
+Rails.logger.info data.inspect
+Rails.logger.info "==============================="
+
+text = data.dig(
+  "candidates",
+  0,
+  "content",
+  "parts",
+  0,
+  "text"
+)
+
+    return {
+  "name" => "Respuesta vacía",
+  "description" => data.inspect,
+  "price" => 0,
+  "quantity" => 1,
+  "category" => "Debug",
+  "marketing_text" => "Gemini no devolvió texto."
+} if text.nil?
+
+JSON.parse(
+  text.gsub("```json", "")
+      .gsub("```", "")
+      .strip
+)
   rescue => e
     {
       "name" => "Error con Haru",
