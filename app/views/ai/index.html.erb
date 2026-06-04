@@ -73,7 +73,7 @@
         <button type="button" id="haruCloseTools" class="haru-close-btn">Cerrar</button>
       </div>
 
-      <%= form_with url: ai_analyze_image_path, method: :post, multipart: true, local: true, class: "haru-upload-form" do |f| %>
+      <%= form_with url: ai_analyze_image_path, method: :post, multipart: true, local: true, data: { turbo: false }, class: "haru-upload-form" do |f| %>
         <div class="haru-upload-grid">
           <label class="haru-upload-option">
             <strong>Tomar foto</strong>
@@ -111,7 +111,7 @@
             <p><strong>Texto de marketing:</strong> <%= @generated_marketing_text %></p>
           </div>
 
-          <%= form_with url: ai_export_product_path, method: :post, local: true do %>
+          <%= form_with url: ai_export_product_path, method: :post, local: true, data: { turbo: false } do %>
             <%= hidden_field_tag :name, @generated_title %>
             <%= hidden_field_tag :description, @generated_description %>
             <%= hidden_field_tag :price, @generated_price %>
