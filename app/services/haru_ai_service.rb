@@ -55,7 +55,10 @@ class HaruAiService
     )
 
     response.dig("choices", 0, "message", "content")
-  rescue StandardError => e
-    "Haru no pudo analizar la imagen con IA en este momento. Error: #{e.message}"
-  end
+rescue StandardError => e
+  Rails.logger.error "OPENAI ERROR: #{e.message}"
+  Rails.logger.error e.backtrace.join("\n")
+
+  "ERROR OPENAI: #{e.message}"
+end
 end

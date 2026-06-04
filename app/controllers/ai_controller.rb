@@ -7,10 +7,10 @@ class AiController < ApplicationController
 
   def analyze_image
     uploaded_file = params[:image]
-    name = params[:name].presence || "Producto sin nombre"
-    description = params[:description].presence || "Producto disponible para venta."
-    price = params[:price].presence || 0
-    quantity = params[:quantity].presence || 1
+    name = ""
+description = ""
+price = 0
+quantity = 1
 
     if uploaded_file.blank?
       @image_result = "Debes subir una imagen."
@@ -18,16 +18,20 @@ class AiController < ApplicationController
       return
     end
 
-    image_bytes = uploaded_file.read
+   image_bytes = uploaded_file.read
 
-    blob = ActiveStorage::Blob.create_and_upload!(
-      io: StringIO.new(image_bytes),
-      filename: uploaded_file.original_filename,
-      content_type: uploaded_file.content_type
-    )
+blob = ActiveStorage::Blob.create_and_upload!(
+  io: StringIO.new(image_bytes),
+  filename: uploaded_file.original_filename,
+  content_type: uploaded_file.content_type
+)
 
-    @generated_title = name
-    @ai_analysis = HaruAiService.analyze_image(
+# AGREGAR ESTA LINEA
+uploaded_file.rewind
+
+@generated_title = name
+
+@ai_analysis = HaruAiService.analyze_image(
   uploaded_file,
   name: name,
   description: description
