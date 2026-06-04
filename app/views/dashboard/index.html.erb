@@ -1,82 +1,110 @@
-<div class="dashboard-page">
-  <aside class="dashboard-sidebar">
-    <div class="dashboard-logo">
-      <h1>AI-Link</h1>
-      <p>Panel principal</p>
+<div class="control-page">
+  <header class="control-header">
+    <div>
+      <p>AI-Link Panel Principal</p>
+      <h1>Centro de control</h1>
+      <span>Gestiona campañas, inventario e inteligencia artificial desde un solo lugar.</span>
     </div>
 
-    <nav class="dashboard-menu">
-      <%= link_to "Inicio", dashboard_index_path %>
-      <%= link_to "Campañas", campaigns_index_path %>
-      <%= link_to "Inventario", inventory_index_path %>
-      <%= link_to "Inteligencia Artificial", ai_index_path %>
-    </nav>
+    <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "control-logout" %>
+  </header>
 
-    <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "dashboard-logout" %>
-  </aside>
+  <section class="control-haru-card">
+    <div class="control-haru-face">
+      <div class="control-haru-eye"></div>
+      <div class="control-haru-eye"></div>
+    </div>
 
-  <main class="dashboard-main">
-    <section class="dashboard-header">
+    <div>
+      <h2>Haru</h2>
+      <p id="controlHaruMessage">
+        Bienvenido. Desde aquí puedes controlar toda tu plataforma AI-Link.
+      </p>
+    </div>
+  </section>
+
+  <section class="control-stats">
+    <div class="control-stat-card">
+      <span>Campañas</span>
+      <strong><%= @total_campaigns %></strong>
+    </div>
+
+    <div class="control-stat-card">
+      <span>Activas</span>
+      <strong><%= @active_campaigns %></strong>
+    </div>
+
+    <div class="control-stat-card">
+      <span>Productos</span>
+      <strong><%= @total_products %></strong>
+    </div>
+
+    <div class="control-stat-card">
+      <span>Stock bajo</span>
+      <strong><%= @low_stock %></strong>
+    </div>
+  </section>
+
+  <section class="control-actions">
+    <%= link_to "Crear campaña", campaigns_index_path %>
+    <%= link_to "Ver inventario", inventory_index_path %>
+    <%= link_to "Abrir Haru IA", ai_index_path %>
+  </section>
+
+  <section class="control-grid">
+    <div class="control-panel">
+      <h2>Campañas recientes</h2>
+
+      <% if @recent_campaigns.any? %>
+        <% @recent_campaigns.each do |campaign| %>
+          <div class="control-list-item">
+            <strong><%= campaign.name %></strong>
+            <span><%= campaign.status.presence || "Sin estado" %></span>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="control-empty-text">Todavía no tienes campañas creadas.</p>
+      <% end %>
+    </div>
+
+    <div class="control-panel">
+      <h2>Productos recientes</h2>
+
+      <% if @recent_products.any? %>
+        <% @recent_products.each do |product| %>
+          <div class="control-list-item">
+            <strong><%= product.name %></strong>
+            <span>Cantidad: <%= product.quantity || 0 %></span>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="control-empty-text">Todavía no tienes productos en inventario.</p>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="control-steps">
+    <h2>Ruta recomendada por Haru</h2>
+
+    <div class="control-steps-grid">
       <div>
-        <p>Bienvenido</p>
-        <h2>Panel de control</h2>
+        <strong>Paso 1</strong>
+        <p>Sube una imagen en IA y deja que Haru prepare un producto.</p>
       </div>
 
-      <div class="dashboard-assistant">
-        <div class="dashboard-assistant-face">
-          <div class="dashboard-assistant-eye"></div>
-          <div class="dashboard-assistant-eye"></div>
-        </div>
-
-        <div class="dashboard-assistant-text" id="dashboard-assistant-message">
-          Hola. Estoy listo para ayudarte a comenzar.
-        </div>
-      </div>
-    </section>
-
-    <section class="dashboard-grid">
-      <div class="dashboard-card">
-        <h3>Campañas</h3>
-        <p>Crea y administra tus campañas de marketing digital.</p>
-        <%= link_to "Ver campañas", campaigns_index_path %>
+      <div>
+        <strong>Paso 2</strong>
+        <p>Exporta el producto al inventario y revisa su stock.</p>
       </div>
 
-      <div class="dashboard-card">
-        <h3>Inventario</h3>
-        <p>Organiza productos y servicios disponibles para tus campañas.</p>
-        <%= link_to "Ver inventario", inventory_index_path %>
+      <div>
+        <strong>Paso 3</strong>
+        <p>Crea una campaña para promocionar ese producto.</p>
       </div>
+    </div>
+  </section>
 
-      <div class="dashboard-card">
-        <h3>Inteligencia Artificial</h3>
-        <p>Genera ideas, textos publicitarios y contenido para tu negocio.</p>
-        <%= link_to "Usar asistente", ai_index_path %>
-      </div>
-    </section>
-
-    <section class="dashboard-steps">
-      <h3>Primeros pasos</h3>
-
-      <div class="dashboard-steps-grid">
-        <div>
-          <strong>Paso 1</strong>
-          <p>Agrega tus productos o servicios.</p>
-        </div>
-
-        <div>
-          <strong>Paso 2</strong>
-          <p>Crea una campaña de marketing.</p>
-        </div>
-
-        <div>
-          <strong>Paso 3</strong>
-          <p>Usa inteligencia artificial para generar contenido.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="dashboard-mobile-nav">
+  <nav class="control-bottom-nav">
     <%= link_to "Inicio", dashboard_index_path %>
     <%= link_to "Campañas", campaigns_index_path %>
     <%= link_to "Inventario", inventory_index_path %>
@@ -86,15 +114,17 @@
 
 <script>
 document.addEventListener("turbo:load", function () {
-  const message = document.getElementById("dashboard-assistant-message");
+  const message = document.getElementById("controlHaruMessage");
+
   if (!message) return;
 
   const messages = [
-    "Hola. Estoy listo para ayudarte a comenzar.",
-    "Puedes crear campañas para promocionar tu negocio.",
-    "También puedes organizar productos dentro del inventario.",
-    "La inteligencia artificial puede ayudarte a generar ideas de contenido.",
-    "Empieza por crear tu primera campaña o agregar tu primer producto."
+    "Bienvenido. Desde aquí puedes controlar toda tu plataforma AI-Link.",
+    "Te recomiendo empezar subiendo una imagen en el apartado de IA.",
+    "Después puedes exportar productos al inventario.",
+    "Cuando tengas productos, crea campañas para promocionarlos.",
+    "Si el stock está bajo, revisa tu inventario antes de crear nuevas promociones.",
+    "Puedo ayudarte a transformar productos en campañas de marketing."
   ];
 
   let index = 0;
