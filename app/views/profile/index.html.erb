@@ -1,225 +1,187 @@
-<div style="
-  width:100vw;
-  min-height:100vh;
-  background:
-    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
-    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
-    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
-    #050510;
-  color:white;
-  font-family:Arial;
-  display:flex;
-">
+<div class="profile-page">
 
-  <!-- SIDEBAR -->
+  <header class="profile-header">
+    <div>
+      <p>AI-Link Perfil</p>
+      <h1>Mi Perfil</h1>
+      <span>
+        Administra tu cuenta, personaliza Haru y consulta tu actividad.
+      </span>
+    </div>
 
-  <div style="
-    width:270px;
-    background:rgba(17,24,39,0.92);
-    padding:30px;
-    border-right:1px solid #7c3aed;
-  ">
+    <%= link_to "Volver al panel",
+    dashboard_index_path,
+    class: "profile-back" %>
+  </header>
 
-    <h1 style="font-size:32px; color:#00ffff;">
-      AI-Link
-    </h1>
+  <section class="profile-haru-card">
 
-    <br><br>
+    <div class="profile-haru-face">
+      <div class="profile-haru-eye"></div>
+      <div class="profile-haru-eye"></div>
+    </div>
 
-    <a href="/dashboard/index" style="color:white; text-decoration:none;">
-      <p> inicio</p>
-    </a>
+    <div>
+      <h2>Haru</h2>
 
-    <br>
+      <p id="profileHaruMessage">
+        Bienvenido. Aquí puedes personalizar tu experiencia dentro de AI-Link.
+      </p>
+    </div>
 
-    <a href="/campaigns/index" style="color:white; text-decoration:none;">
-      <p> Campañas</p>
-    </a>
+  </section>
 
-    <br>
+  <section class="profile-stats">
 
-    <a href="/inventory/index" style="color:white; text-decoration:none;">
-      <p> Inventario</p>
-    </a>
+    <div class="profile-stat-card">
+      <span>Campañas</span>
+      <strong><%= @total_campaigns %></strong>
+    </div>
 
-    <br>
+    <div class="profile-stat-card">
+      <span>Productos</span>
+      <strong><%= @total_products %></strong>
+    </div>
 
-    <a href="/ai/index" style="color:white; text-decoration:none;">
-      <p> IA Marketing</p>
-    </a>
+    <div class="profile-stat-card">
+      <span>Stock</span>
+      <strong><%= @total_stock || 0 %></strong>
+    </div>
 
-    <br>
+  </section>
 
-    <a href="/profile/index" style="color:#00ffff; text-decoration:none;">
-      <p> Mi Perfil</p>
-    </a>
+  <section class="profile-main">
 
-  </div>
+    <div class="profile-card">
 
-  <!-- CONTENIDO -->
+      <h2>Información personal</h2>
 
-  <div style="
-    flex:1;
-    padding:50px;
-  ">
+      <% if current_user.avatar.attached? %>
 
-    <h1 style="
-      font-size:50px;
-      color:#ff00ff;
-    ">
-      Mi Perfil
-    </h1>
+        <%= image_tag current_user.avatar,
+        class: "profile-avatar" %>
 
-    <p style="
-      color:#ccc;
-      margin-top:10px;
-      font-size:18px;
-    ">
-      Administra tu cuenta y configuración.
-    </p>
+      <% else %>
 
-    <br><br>
+        <div class="profile-avatar-placeholder">
+          H
+        </div>
 
-    <div style="
-      background:rgba(255,255,255,0.08);
-      padding:40px;
-      border-radius:25px;
-      border:1px solid #00ffff;
-      max-width:700px;
-    ">
+      <% end %>
 
-      <!-- FOTO -->
+      <%= form_with url: profile_update_path,
+      method: :post,
+      multipart: true,
+      local: true do %>
 
-      <div style="margin-bottom:30px;">
+        <div class="profile-field">
+          <label>Nombre de usuario</label>
 
-        <% if current_user.avatar.attached? %>
+          <%= text_field_tag :username,
+          current_user.username,
+          class: "profile-input" %>
+        </div>
 
-          <%= image_tag current_user.avatar, style: "
-            width:140px;
-            height:140px;
-            border-radius:50%;
-            object-fit:cover;
-            border:4px solid #ff00ff;
-          " %>
+        <div class="profile-field">
+          <label>Correo electrónico</label>
 
-        <% else %>
+          <input
+            type="email"
+            value="<%= current_user.email %>"
+            disabled
+            class="profile-input"
+          >
+        </div>
 
-          <div style="
-            width:140px;
-            height:140px;
-            border-radius:50%;
-            background:#7c3aed;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:60px;
-          ">
-            👤
-          </div>
+        <div class="profile-field">
+          <label>Foto de perfil</label>
 
-        <% end %>
+          <%= file_field_tag :avatar,
+          accept: "image/*",
+          class: "profile-input" %>
+        </div>
 
-      </div>
+        <%= submit_tag "Guardar cambios",
+        class: "profile-save-btn" %>
 
-      <!-- FORM -->
-
-      <form action="/profile/update" method="post" enctype="multipart/form-data">
-
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-        <label style="font-size:18px;">
-          Nombre de usuario
-        </label>
-
-        <br><br>
-
-        <input
-          type="text"
-          name="username"
-          value="<%= current_user.username %>"
-          style="
-            width:100%;
-            padding:15px;
-            border:none;
-            border-radius:12px;
-            margin-bottom:25px;
-            font-size:16px;
-          "
-        >
-
-        <label style="font-size:18px;">
-          Correo electrónico
-        </label>
-
-        <br><br>
-
-        <input
-          type="email"
-          value="<%= current_user.email %>"
-          disabled
-          style="
-            width:100%;
-            padding:15px;
-            border:none;
-            border-radius:12px;
-            margin-bottom:25px;
-            background:#ddd;
-          "
-        >
-
-        <label style="font-size:18px;">
-          Foto de perfil
-        </label>
-
-        <br><br>
-
-        <input
-          type="file"
-          name="avatar"
-          accept="image/*"
-          style="
-            margin-bottom:30px;
-          "
-        >
-
-        <br>
-
-        <button
-          type="submit"
-          style="
-            background:#2563eb;
-            color:white;
-            padding:16px 30px;
-            border:none;
-            border-radius:12px;
-            font-size:18px;
-            cursor:pointer;
-          "
-        >
-          Guardar Cambios
-        </button>
-
-      </form>
-
-      <br><br>
-
-      <!-- CAMBIAR CONTRASEÑA -->
-
-      <%= button_to "Cambiar Contraseña",
-      edit_user_registration_path,
-      method: :get,
-      style: "
-        background:#ff00ff;
-        color:white;
-        border:none;
-        padding:16px 30px;
-        border-radius:12px;
-        font-size:18px;
-        cursor:pointer;
-      " %>
+      <% end %>
 
     </div>
 
-  </div>
+    <div class="profile-card">
+
+      <h2>Configuración de Haru</h2>
+
+      <div class="profile-setting">
+        <strong>Modo actual</strong>
+        <p>Asistente de marketing digital</p>
+      </div>
+
+      <div class="profile-setting">
+        <strong>Funciones activas</strong>
+        <p>
+          Inventario, campañas, análisis de imágenes e inteligencia artificial.
+        </p>
+      </div>
+
+      <div class="profile-setting">
+        <strong>Próximamente</strong>
+        <p>
+          GPT, Gemini, Claude, DeepSeek y memoria avanzada.
+        </p>
+      </div>
+
+      <%= button_to "Cambiar contraseña",
+      edit_user_registration_path,
+      method: :get,
+      class: "profile-password-btn" %>
+
+    </div>
+
+  </section>
+
+  <nav class="profile-bottom-nav">
+    <%= link_to "Inicio", dashboard_index_path %>
+    <%= link_to "Campañas", campaigns_index_path %>
+    <%= link_to "Inventario", inventory_index_path %>
+    <%= link_to "IA", ai_index_path %>
+  </nav>
 
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+
+  const message =
+    document.getElementById("profileHaruMessage");
+
+  if (!message) return;
+
+  const messages = [
+    "Bienvenido. Aquí puedes personalizar tu experiencia dentro de AI-Link.",
+    "Tu perfil almacena la información principal de tu cuenta.",
+    "Más adelante podré recordar campañas y productos favoritos.",
+    "Pronto podrás elegir diferentes personalidades para Haru.",
+    "La inteligencia artificial se integrará directamente desde este perfil."
+  ];
+
+  let index = 0;
+
+  setInterval(function () {
+
+    index = (index + 1) % messages.length;
+
+    message.style.opacity = "0";
+
+    setTimeout(function () {
+
+      message.textContent = messages[index];
+
+      message.style.opacity = "1";
+
+    }, 300);
+
+  }, 3000);
+
+});
+</script>
