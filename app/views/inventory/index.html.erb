@@ -1,400 +1,134 @@
-<div style="
-  display:flex;
-  width:100vw;
-  min-height:100vh;
-  font-family:Arial;
-  background:
-    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
-    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
-    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
-    #050510;
-  color:white;
-">
-
-  <!-- SIDEBAR -->
-
-  <div style="
-    width:270px;
-    background:rgba(17,24,39,0.92);
-    padding:30px;
-    border-right:1px solid #7c3aed;
-  ">
-
-    <h1 style="font-size:32px; color:#00ffff;">
-      AI-Link
-    </h1>
-
-    <br><br>
-
-    <a href="/dashboard/index" style="color:white; text-decoration:none;">
-      <p>inicio</p>
-    </a>
-
-    <br>
-
-    <a href="/campaigns/index" style="color:white; text-decoration:none;">
-      <p> Campañas</p>
-    </a>
-
-    <br>
-
-    <a href="/inventory/index" style="color:#00ffff; text-decoration:none;">
-      <p> Inventario</p>
-    </a>
-
-    <br>
-
-    <a href="/ai/index" style="color:white; text-decoration:none;">
-      <p> IA Marketing</p>
-    </a>
-
-    <br>
-
-    <a href="/profile/index" style="color:white; text-decoration:none;">
-      <p> Mi Perfil</p>
-    </a>
-
-  </div>
-
-  <!-- CONTENIDO -->
-
-  <div style="
-    flex:1;
-    padding:45px;
-    overflow-y:auto;
-  ">
-
-    <h1 style="
-      font-size:50px;
-      color:#00ffff;
-    ">
-      Inventario
-    </h1>
-
-    <p style="
-      color:#ccc;
-      font-size:18px;
-    ">
-      Administra productos, ventas y stock.
-    </p>
-
-    <br><br>
-
-    <!-- CARDS -->
-
-    <div style="
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    ">
-
-      <div style="
-        background:rgba(255,255,255,0.08);
-        padding:25px;
-        border-radius:18px;
-        border:1px solid #00ffff;
-      ">
-
-        <h2>
-          Productos
-        </h2>
-
-        <p style="
-          font-size:38px;
-        ">
-          <%= @total_products %>
-        </p>
-
-      </div>
-
-      <div style="
-        background:rgba(255,255,255,0.08);
-        padding:25px;
-        border-radius:18px;
-        border:1px solid #00ff99;
-      ">
-
-        <h2>
-          Stock total
-        </h2>
-
-        <p style="
-          font-size:38px;
-        ">
-          <%= @total_stock %>
-        </p>
-
-      </div>
-
-      <div style="
-        background:rgba(255,255,255,0.08);
-        padding:25px;
-        border-radius:18px;
-        border:1px solid #ff00ff;
-      ">
-
-        <h2>
-          Stock bajo
-        </h2>
-
-        <p style="
-          font-size:38px;
-        ">
-          <%= @low_stock %>
-        </p>
-
-      </div>
-
+<div class="inventory-page">
+  <header class="inventory-header">
+    <div>
+      <p>AI-Link Inventario</p>
+      <h1>Inventario</h1>
+      <span>Administra productos, ventas, stock e imágenes exportadas por Haru.</span>
     </div>
 
-    <br><br>
-
-    <!-- TABLA -->
-
-    <div style="
-      background:rgba(255,255,255,0.08);
-      padding:30px;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,0.2);
-      overflow-x:auto;
-    ">
-
-      <table style="
-        width:100%;
-        border-collapse:collapse;
-        color:white;
-      ">
-
-        <thead>
-
-          <tr style="
-            border-bottom:1px solid rgba(255,255,255,0.3);
-            color:#00ffff;
-          ">
-
-            <th style="padding:15px; text-align:left;">
-              Imagen
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Producto
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Descripción
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Precio
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Cantidad
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Vendido
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Agotado
-            </th>
-
-            <th style="padding:15px; text-align:left;">
-              Eliminar
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <% @products.each do |product| %>
-
-            <tr style="
-              border-bottom:1px solid rgba(255,255,255,0.15);
-            ">
-
-              <!-- IMAGEN -->
-
-              <td style="padding:15px;">
-
-                <% if product.image.attached? %>
-
-                  <%= image_tag product.image,
-                  style: "
-                    width:80px;
-                    height:80px;
-                    object-fit:cover;
-                    border-radius:12px;
-                    border:2px solid #00ffff;
-                  " %>
-
-                <% else %>
-
-                  <div style="
-                    width:80px;
-                    height:80px;
-                    background:#111827;
-                    border-radius:12px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:12px;
-                  ">
-                    Sin imagen
-                  </div>
-
-                <% end %>
-
-              </td>
-
-              <!-- PRODUCTO -->
-
-              <td style="
-                padding:15px;
-                color:#ff00ff;
-                font-weight:bold;
-              ">
-                <%= product.name %>
-              </td>
-
-              <!-- DESCRIPCION -->
-
-              <td style="
-                padding:15px;
-                max-width:300px;
-                color:#ddd;
-              ">
-                <%= product.description %>
-              </td>
-
-              <!-- PRECIO -->
-
-              <td style="padding:15px;">
-                $<%= product.price || 0 %>
-              </td>
-
-              <!-- CANTIDAD -->
-
-              <td style="padding:15px;">
-
-                <% if product.quantity.to_i <= 0 %>
-
-                  <span style="color:#ff4444;">
-                    Agotado
-                  </span>
-
-                <% else %>
-
-                  <%= product.quantity %>
-
-                <% end %>
-
-              </td>
-
-              <!-- VENDIDO -->
-
-              <td style="padding:15px;">
-
-                <form action="/inventory/sold" method="post" style="
-                  display:flex;
-                  gap:8px;
-                ">
-
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-                  <input type="hidden" name="product_id" value="<%= product.id %>">
-
-                  <input
-                    type="number"
-                    name="sold_quantity"
-                    min="1"
-                    value="1"
-                    style="
-                      width:70px;
-                      padding:8px;
-                      border:none;
-                      border-radius:8px;
-                    "
-                  >
-
-                  <button type="submit" style="
-                    background:#2563eb;
-                    color:white;
-                    border:none;
-                    padding:9px 12px;
-                    border-radius:8px;
-                    cursor:pointer;
-                  ">
-                    Vendido
-                  </button>
-
-                </form>
-
-              </td>
-
-              <!-- AGOTADO -->
-
-              <td style="padding:15px;">
-
-                <form action="/inventory/sold_out" method="post">
-
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-                  <input type="hidden" name="product_id" value="<%= product.id %>">
-
-                  <button type="submit" style="
-                    background:#dc2626;
-                    color:white;
-                    border:none;
-                    padding:10px 15px;
-                    border-radius:8px;
-                    cursor:pointer;
-                  ">
-                    Agotado
-                  </button>
-
-                </form>
-
-              </td>
-
-              <!-- ELIMINAR -->
-
-              <td style="padding:15px;">
-
-                <form action="/inventory/delete" method="post">
-
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-                  <input type="hidden" name="product_id" value="<%= product.id %>">
-
-                  <button type="submit" style="
-                    background:#7f1d1d;
-                    color:white;
-                    border:none;
-                    padding:10px 15px;
-                    border-radius:8px;
-                    cursor:pointer;
-                  ">
-                    Eliminar
-                  </button>
-
-                </form>
-
-              </td>
-
-            </tr>
-
-          <% end %>
-
-        </tbody>
-
-      </table>
-
+    <%= link_to "Volver al panel", dashboard_index_path, class: "inventory-back" %>
+  </header>
+
+  <section class="inventory-haru-card">
+    <div class="inventory-haru-face">
+      <div class="inventory-haru-eye"></div>
+      <div class="inventory-haru-eye"></div>
     </div>
 
-  </div>
+    <div>
+      <h2>Haru</h2>
+      <p id="inventoryHaruMessage">
+        Aquí puedes revisar los productos que exportaste desde el apartado de inteligencia artificial.
+      </p>
+    </div>
+  </section>
 
+  <section class="inventory-stats">
+    <div class="inventory-stat-card">
+      <span>Productos</span>
+      <strong><%= @total_products %></strong>
+    </div>
+
+    <div class="inventory-stat-card">
+      <span>Stock total</span>
+      <strong><%= @total_stock || 0 %></strong>
+    </div>
+
+    <div class="inventory-stat-card">
+      <span>Stock bajo</span>
+      <strong><%= @low_stock %></strong>
+    </div>
+  </section>
+
+  <section class="inventory-products">
+    <% if @products.any? %>
+      <% @products.each do |product| %>
+        <article class="inventory-product-card">
+          <div class="inventory-product-image">
+            <% if product.image.attached? %>
+              <%= image_tag product.image %>
+            <% else %>
+              <span>Sin imagen</span>
+            <% end %>
+          </div>
+
+          <div class="inventory-product-info">
+            <h3><%= product.name %></h3>
+            <p><%= product.description.presence || "Sin descripción registrada." %></p>
+
+            <div class="inventory-product-data">
+              <span>Precio: $<%= product.price || 0 %></span>
+
+              <% if product.quantity.to_i <= 0 %>
+                <span class="inventory-danger">Agotado</span>
+              <% elsif product.quantity.to_i <= 5 %>
+                <span class="inventory-warning">Stock bajo: <%= product.quantity %></span>
+              <% else %>
+                <span>Cantidad: <%= product.quantity %></span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="inventory-actions">
+            <%= form_with url: inventory_sold_path, method: :post, local: true, class: "inventory-sold-form" do %>
+              <%= hidden_field_tag :product_id, product.id %>
+              <%= number_field_tag :sold_quantity, 1, min: 1, class: "inventory-number" %>
+              <%= submit_tag "Vendido", class: "inventory-btn inventory-btn-blue" %>
+            <% end %>
+
+            <%= form_with url: inventory_sold_out_path, method: :post, local: true do %>
+              <%= hidden_field_tag :product_id, product.id %>
+              <%= submit_tag "Agotar", class: "inventory-btn inventory-btn-red" %>
+            <% end %>
+
+            <%= form_with url: inventory_delete_path, method: :post, local: true do %>
+              <%= hidden_field_tag :product_id, product.id %>
+              <%= submit_tag "Eliminar", class: "inventory-btn inventory-btn-dark" %>
+            <% end %>
+          </div>
+        </article>
+      <% end %>
+    <% else %>
+      <div class="inventory-empty">
+        <h2>No hay productos todavía</h2>
+        <p>Sube una imagen en el apartado de IA, analízala con Haru y expórtala al inventario.</p>
+        <%= link_to "Ir a IA", ai_index_path %>
+      </div>
+    <% end %>
+  </section>
+
+  <nav class="inventory-bottom-nav">
+    <%= link_to "Inicio", dashboard_index_path %>
+    <%= link_to "Campañas", campaigns_index_path %>
+    <%= link_to "Inventario", inventory_index_path %>
+    <%= link_to "IA", ai_index_path %>
+  </nav>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const message = document.getElementById("inventoryHaruMessage");
+
+  if (!message) return;
+
+  const messages = [
+    "Aquí puedes revisar los productos que exportaste desde el apartado de inteligencia artificial.",
+    "Si un producto se vende, registra la cantidad vendida para actualizar el stock.",
+    "Cuando un producto ya no esté disponible, puedes marcarlo como agotado.",
+    "Los productos con pocas unidades aparecerán como stock bajo.",
+    "Más adelante podré ayudarte a recomendar qué productos promocionar primero."
+  ];
+
+  let index = 0;
+
+  setInterval(function () {
+    index = (index + 1) % messages.length;
+    message.style.opacity = "0";
+
+    setTimeout(function () {
+      message.textContent = messages[index];
+      message.style.opacity = "1";
+    }, 300);
+  }, 3000);
+});
+</script>
