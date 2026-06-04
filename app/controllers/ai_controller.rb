@@ -37,6 +37,10 @@ uploaded_file.rewind
   HaruGeminiService.analyze_image(
     uploaded_file
   )
+
+Rails.logger.info "========== HARU =========="
+Rails.logger.info @ai_analysis.inspect
+Rails.logger.info "=========================="
 @generated_description = @ai_analysis
   @generated_price = price
     @generated_quantity = quantity
