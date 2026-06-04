@@ -1393,3 +1393,42 @@ body {
     width: 100%;
   }
 }
+.haru-state-normal {
+  box-shadow: 0 0 40px rgba(56,189,248,.5);
+}
+
+.haru-state-thinking {
+  animation: haruThinking 1s infinite alternate;
+}
+
+.haru-state-analyzing {
+  animation: haruAnalyzing .4s infinite alternate;
+}
+
+.haru-state-success {
+  box-shadow: 0 0 60px rgba(34,197,94,.9);
+}
+
+@keyframes haruThinking {
+
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.05);
+  }
+
+}
+
+@keyframes haruAnalyzing {
+
+  from {
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    filter: hue-rotate(180deg);
+  }
+
+}

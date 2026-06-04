@@ -12,7 +12,7 @@
   <main class="haru-ai-layout">
     <section class="haru-ai-assistant">
       <button class="haru-ai-face-button" id="haruOpenTools" type="button">
-        <div class="haru-ai-face" id="haruFace">
+        <div class="haru-ai-face haru-state-normal" id="haruFace">
           <div class="haru-ai-eye"></div>
           <div class="haru-ai-eye"></div>
         </div>
@@ -101,23 +101,41 @@ document.addEventListener("turbo:load", function () {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
-  function setHaruState(text, thinking) {
+  function setHaruState(text, state = "normal") {
     statusText.textContent = text;
 
-    if (thinking) {
-      face.classList.add("thinking");
-    } else {
-      face.classList.remove("thinking");
-    }
+    face.classList.remove(
+      "haru-state-normal",
+      "haru-state-thinking",
+      "haru-state-analyzing",
+      "haru-state-success",
+      "haru-state-error"
+    );
+
+    face.classList.add("haru-state-" + state);
   }
 
   function simulateHaruResponse(text) {
-    setHaruState("Estoy pensando una respuesta...", true);
+    setHaruState("Estoy pensando una respuesta...", "thinking");
 
     setTimeout(function () {
       addMessage(text, "haru-message-bot");
-      setHaruState("Lista para ayudarte con el siguiente paso.", false);
+      setHaruState("Lista para ayudarte con el siguiente paso.", "normal");
     }, 1200);
+  }
+
+  function simulateImageAnalysis() {
+    setHaruState("Analizando imagen...", "analyzing");
+
+    setTimeout(function () {
+      addMessage("Objeto detectado: Producto", "haru-message-bot");
+      addMessage("Categoría estimada: Comercial", "haru-message-bot");
+      addMessage("La imagen parece apta para marketing digital.", "haru-message-bot");
+      addMessage("Recomendación: usa una descripción clara, precio visible y una llamada a la acción.", "haru-message-bot");
+      addMessage("¿Quieres generar un anuncio para este producto?", "haru-message-bot");
+
+      setHaruState("Análisis completado.", "success");
+    }, 2500);
   }
 
   if (openTools) {
@@ -131,7 +149,7 @@ document.addEventListener("turbo:load", function () {
   if (closeTools) {
     closeTools.addEventListener("click", function () {
       toolsPanel.classList.remove("active");
-      setHaruState("Panel cerrado. Puedes tocarme de nuevo cuando quieras.", false);
+      setHaruState("Panel cerrado. Puedes tocarme de nuevo cuando quieras.", "normal");
     });
   }
 
@@ -147,18 +165,30 @@ document.addEventListener("turbo:load", function () {
 
       if (action === "ad") {
         addMessage("Quiero generar un anuncio.", "haru-message-user");
-        simulateHaruResponse("Puedo ayudarte a crear un anuncio. Después conectaremos esta función con varios modelos de IA.");
+        setHaruState("Generando idea de anuncio...", "thinking");
+
+        setTimeout(function () {
+          addMessage("Anuncio sugerido: Presenta tu producto con una frase directa, una ventaja principal y una invitación a comprar.", "haru-message-bot");
+          addMessage("Ejemplo: Haz que tu negocio destaque con una solución práctica, atractiva y lista para tus clientes.", "haru-message-bot");
+          setHaruState("Anuncio generado.", "success");
+        }, 1600);
       }
 
       if (action === "campaign") {
         addMessage("Quiero una idea de campaña.", "haru-message-user");
-        simulateHaruResponse("Una buena campaña puede iniciar con el producto, el público objetivo y el canal donde se publicará.");
+        setHaruState("Preparando idea de campaña...", "thinking");
+
+        setTimeout(function () {
+          addMessage("Idea de campaña: Publica una imagen del producto, explica su beneficio principal y ofrece una promoción limitada.", "haru-message-bot");
+          addMessage("Canales sugeridos: redes sociales, historias, grupos locales y mensajes directos.", "haru-message-bot");
+          setHaruState("Idea de campaña lista.", "success");
+        }, 1600);
       }
 
       if (action === "clear") {
         chatWindow.innerHTML = "";
         addMessage("Hola, soy Haru. Empezamos de nuevo. ¿Qué quieres hacer?", "haru-message-bot");
-        setHaruState("Chat reiniciado. Estoy lista para ayudarte.", false);
+        setHaruState("Chat reiniciado. Estoy lista para ayudarte.", "normal");
       }
     });
   });
@@ -166,14 +196,18 @@ document.addEventListener("turbo:load", function () {
   imageInputs.forEach(function (input) {
     input.addEventListener("change", function () {
       const file = input.files[0];
-      if (!file) return;
+
+      if (!file) {
+        setHaruState("No se seleccionó ninguna imagen.", "error");
+        return;
+      }
 
       const imageUrl = URL.createObjectURL(file);
       previewImage.src = imageUrl;
       preview.classList.add("has-image");
 
       addMessage("Ya seleccioné una imagen.", "haru-message-user");
-      simulateHaruResponse("Imagen cargada correctamente. En la siguiente fase analizaré el contenido, categoría, colores y posibles anuncios.");
+      simulateImageAnalysis();
     });
   });
 });
