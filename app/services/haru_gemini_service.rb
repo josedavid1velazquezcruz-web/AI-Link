@@ -3,7 +3,7 @@ require "json"
 require "base64"
 
 class HaruGeminiService
-  API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+  API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
 
   def self.analyze_image(image)
     new.analyze_image(image)
