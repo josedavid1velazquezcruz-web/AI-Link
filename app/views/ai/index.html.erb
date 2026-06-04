@@ -42,6 +42,14 @@
           <div class="haru-message haru-message-bot">
             Descripción generada: <%= @generated_description %>
           </div>
+
+          <div class="haru-message haru-message-bot">
+            Categoría detectada: <%= @generated_category %>
+          </div>
+
+          <div class="haru-message haru-message-bot">
+            Texto de marketing: <%= @generated_marketing_text %>
+          </div>
         <% end %>
       </div>
 
@@ -85,8 +93,6 @@
           <img id="haruPreviewImage" alt="Vista previa de imagen">
         </div>
 
- 
-
         <%= f.submit "Analizar con Haru", class: "haru-submit-btn", id: "haruAnalyzeSubmit" %>
       <% end %>
 
@@ -99,8 +105,10 @@
           <div class="haru-result-data">
             <p><strong>Nombre:</strong> <%= @generated_title %></p>
             <p><strong>Descripción:</strong> <%= @generated_description %></p>
-            <p><strong>Precio:</strong> <%= @generated_price %></p>
+            <p><strong>Categoría:</strong> <%= @generated_category %></p>
+            <p><strong>Precio:</strong> $<%= @generated_price %></p>
             <p><strong>Cantidad:</strong> <%= @generated_quantity %></p>
+            <p><strong>Texto de marketing:</strong> <%= @generated_marketing_text %></p>
           </div>
 
           <%= form_with url: ai_export_product_path, method: :post, local: true do %>
@@ -108,6 +116,8 @@
             <%= hidden_field_tag :description, @generated_description %>
             <%= hidden_field_tag :price, @generated_price %>
             <%= hidden_field_tag :quantity, @generated_quantity %>
+            <%= hidden_field_tag :category, @generated_category %>
+            <%= hidden_field_tag :marketing_text, @generated_marketing_text %>
             <%= hidden_field_tag :image_blob_signed_id, @image_blob_signed_id %>
 
             <%= submit_tag "Exportar al inventario", class: "haru-submit-btn" %>
