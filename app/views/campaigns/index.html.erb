@@ -1,117 +1,108 @@
-<div style="
-  display:flex;
-  width:100vw;
-  min-height:100vh;
-  font-family:Arial;
-  background:
-    linear-gradient(rgba(10,10,30,0.92), rgba(10,10,30,0.96)),
-    radial-gradient(circle at top left, #ff00ff 0%, transparent 30%),
-    radial-gradient(circle at bottom right, #00ffff 0%, transparent 30%),
-    #050510;
-  color:white;
-">
+<div class="campaigns-page">
+  <header class="campaigns-header">
+    <div>
+      <p>AI-Link Campañas</p>
+      <h1>Campañas</h1>
+      <span>Administra campañas privadas para promocionar tus productos y servicios.</span>
+    </div>
 
-  <div style="width:270px; background:rgba(17,24,39,0.92); padding:30px; border-right:1px solid #7c3aed;">
-    <h1 style="font-size:32px; color:#00ffff;">AI-Link</h1>
+    <%= link_to "Volver al panel", dashboard_index_path, class: "campaigns-back" %>
+  </header>
 
-    <br><br>
+  <section class="campaigns-haru-card">
+    <div class="campaigns-haru-face">
+      <div class="campaigns-haru-eye"></div>
+      <div class="campaigns-haru-eye"></div>
+    </div>
 
-    <a href="/dashboard/index" style="color:white; text-decoration:none;"><p> inicio</p></a><br>
-    <a href="/campaigns/index" style="color:#00ffff; text-decoration:none;"><p> Campañas</p></a><br>
-    <a href="/inventory/index" style="color:white; text-decoration:none;"><p> Inventario</p></a><br>
-    <a href="/ai/index" style="color:white; text-decoration:none;"><p> IA Marketing</p></a><br>
-    <a href="/profile/index" style="color:white; text-decoration:none;"><p> Mi Perfil</p></a>
-  </div>
+    <div>
+      <h2>Haru</h2>
+      <p id="campaignsHaruMessage">
+        Aquí puedes crear campañas para promocionar los productos de tu inventario.
+      </p>
+    </div>
+  </section>
 
-  <div style="flex:1; padding:50px; overflow-y:auto;">
+  <section class="campaigns-create-card">
+    <h2>Crear nueva campaña</h2>
 
-    <h1 style="font-size:50px; color:#ff00ff;">Campañas</h1>
+    <%= form_with url: campaigns_create_path, method: :post, local: true, class: "campaigns-form" do %>
+      <div class="campaigns-fields">
+        <input type="text" name="name" placeholder="Nombre de campaña" class="campaigns-input" required>
 
-    <p style="color:#ccc; font-size:18px; margin-top:10px;">
-      Administra tus campañas privadas de marketing digital.
-    </p>
-
-    <br><br>
-
-    <form action="/campaigns/create" method="post" style="
-      background:rgba(255,255,255,0.08);
-      padding:30px;
-      border-radius:22px;
-      border:1px solid #00ffff;
-      box-shadow:0 0 25px rgba(0,255,255,0.15);
-    ">
-
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-      <input
-        type="text"
-        name="name"
-        placeholder="Nombre de campaña"
-        style="padding:16px; width:330px; border:none; border-radius:12px; font-size:16px;"
-      >
-
-      <input
-        type="text"
-        name="status"
-        placeholder="Estado: Activa / Pausada"
-        style="padding:16px; width:240px; border:none; border-radius:12px; font-size:16px; margin-left:10px;"
-      >
-
-      <button type="submit" style="
-        padding:16px 28px;
-        background:#2563eb;
-        color:white;
-        border:none;
-        border-radius:12px;
-        font-size:16px;
-        cursor:pointer;
-        margin-left:10px;
-      ">
-        Crear Campaña
-      </button>
-
-    </form>
-
-    <br><br>
-
-    <% @campaigns.each do |campaign| %>
-
-      <div style="
-        background:rgba(255,255,255,0.09);
-        padding:28px;
-        border-radius:22px;
-        margin-bottom:22px;
-        border:1px solid rgba(255,255,255,0.18);
-        box-shadow:0 0 25px rgba(255,0,255,0.12);
-      ">
-
-        <h2 style="font-size:28px; color:#00ffff;">
-          <%= campaign.name %>
-        </h2>
-
-        <p style="color:#ccc; margin-top:10px;">
-          Estado: <%= campaign.status %>
-        </p>
-
-        <br>
-
-        <a href="/campaigns/delete/<%= campaign.id %>">
-          <button style="
-            padding:12px 22px;
-            background:#dc2626;
-            color:white;
-            border:none;
-            border-radius:10px;
-            cursor:pointer;
-          ">
-            Eliminar
-          </button>
-        </a>
-
+        <select name="status" class="campaigns-input">
+          <option value="Activa">Activa</option>
+          <option value="Pausada">Pausada</option>
+          <option value="Planeada">Planeada</option>
+        </select>
       </div>
 
+      <button type="submit" class="campaigns-submit">Crear campaña</button>
     <% end %>
+  </section>
 
-  </div>
+  <section class="campaigns-list">
+    <% if @campaigns.any? %>
+      <% @campaigns.each do |campaign| %>
+        <article class="campaign-card">
+          <div>
+            <span class="campaign-status <%= campaign.status.to_s.downcase %>">
+              <%= campaign.status.presence || "Sin estado" %>
+            </span>
 
+            <h3><%= campaign.name %></h3>
+
+            <p>
+              Haru puede ayudarte a convertir esta campaña en anuncios, ideas de contenido y publicaciones.
+            </p>
+          </div>
+
+          <div class="campaign-actions">
+            <%= link_to "Abrir IA", ai_index_path, class: "campaign-btn campaign-btn-blue" %>
+            <%= link_to "Eliminar", "/campaigns/delete/#{campaign.id}", class: "campaign-btn campaign-btn-red" %>
+          </div>
+        </article>
+      <% end %>
+    <% else %>
+      <div class="campaigns-empty">
+        <h2>No hay campañas todavía</h2>
+        <p>Crea tu primera campaña para empezar a organizar tu marketing digital.</p>
+      </div>
+    <% end %>
+  </section>
+
+  <nav class="campaigns-bottom-nav">
+    <%= link_to "Inicio", dashboard_index_path %>
+    <%= link_to "Campañas", campaigns_index_path %>
+    <%= link_to "Inventario", inventory_index_path %>
+    <%= link_to "IA", ai_index_path %>
+  </nav>
 </div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  const message = document.getElementById("campaignsHaruMessage");
+
+  if (!message) return;
+
+  const messages = [
+    "Aquí puedes crear campañas para promocionar los productos de tu inventario.",
+    "Una campaña puede estar activa, pausada o en planeación.",
+    "Después podrás conectar una campaña con Haru para generar anuncios automáticamente.",
+    "Usa nombres claros para identificar cada estrategia de marketing.",
+    "Más adelante podré recomendar qué campaña activar según tu inventario."
+  ];
+
+  let index = 0;
+
+  setInterval(function () {
+    index = (index + 1) % messages.length;
+    message.style.opacity = "0";
+
+    setTimeout(function () {
+      message.textContent = messages[index];
+      message.style.opacity = "1";
+    }, 300);
+  }, 3000);
+});
+</script>
