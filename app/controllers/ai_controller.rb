@@ -27,8 +27,14 @@ class AiController < ApplicationController
     )
 
     @generated_title = name
-    @generated_description = "Presenta #{name} de forma atractiva para tus clientes. #{description}"
-    @generated_price = price
+    @ai_analysis = HaruAiService.analyze_image(
+  uploaded_file,
+  name: name,
+  description: description
+)
+
+@generated_description = @ai_analysis
+  @generated_price = price
     @generated_quantity = quantity
     @image_blob_signed_id = blob.signed_id
 
