@@ -75,3 +75,4 @@ gem "tailwindcss-rails", "~> 4.4"
 gem "devise"
 gem "letter_opener_web", group: :development
 gem "ruby-openai"
+gem "httparty"

@@ -31,12 +31,12 @@ uploaded_file.rewind
 
 @generated_title = name
 
-@ai_analysis = HaruAiService.analyze_image(
-  uploaded_file,
-  name: name,
-  description: description
-)
+uploaded_file.rewind
 
+@ai_analysis =
+  HaruGeminiService.analyze_image(
+    uploaded_file
+  )
 @generated_description = @ai_analysis
   @generated_price = price
     @generated_quantity = quantity
