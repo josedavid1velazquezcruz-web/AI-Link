@@ -85,12 +85,7 @@
           <img id="haruPreviewImage" alt="Vista previa de imagen">
         </div>
 
-        <div class="haru-extra-fields">
-          <%= f.text_field :name, placeholder: "Nombre del producto", class: "haru-input" %>
-          <%= f.text_area :description, placeholder: "Descripción breve", class: "haru-input", rows: 3 %>
-          <%= f.number_field :price, placeholder: "Precio", class: "haru-input", step: "0.01" %>
-          <%= f.number_field :quantity, placeholder: "Cantidad", class: "haru-input" %>
-        </div>
+ 
 
         <%= f.submit "Analizar con Haru", class: "haru-submit-btn", id: "haruAnalyzeSubmit" %>
       <% end %>
